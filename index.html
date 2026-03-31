@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PromptVault USA | Premium AI Prompts</title>
+    <title>PromptVault USA | Premium AI Advantage</title>
     
     <link rel="icon" type="image/png" href="logo.png">
+    <meta name="p:domain_verify" content="d052050534f657b1bdfe18653599cb3d"/>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <style>
         :root { 
             --primary: #0070ba; 
             --secondary: #00d4ff; 
-            --dark: #000000; 
-            --card-bg: #111111;
+            --dark: #020617; 
+            --card-bg: #0f172a;
             --accent: #f59e0b; 
             --border: rgba(255, 255, 255, 0.1); 
             --glass: rgba(255, 255, 255, 0.05);
@@ -25,55 +26,44 @@
             margin: 0; 
             background: var(--dark); 
             color: white; 
-            padding-bottom: 80px; /* Space for bottom nav */
+            padding-bottom: 90px; /* Space for bottom nav */
+            overflow-x: hidden;
         }
 
-        /* 🔦 SPOTLIGHT GRADIENT BACKGROUND */
+        /* 🔦 ORIGINAL COLOR SPOTLIGHT */
         .spotlight {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100vw;
-            height: 100vh;
-            background: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.08) 0%, transparent 60%);
-            pointer-events: none;
-            z-index: 0;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 20%, rgba(0, 112, 186, 0.15) 0%, transparent 60%);
+            pointer-events: none; z-index: 0;
         }
 
         .container { max-width: 500px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
         
-        /* HEADER - Matches Screenshot */
+        /* HEADER - App Style */
         header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            padding: 15px 20px;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 25px; sticky; top: 0; z-index: 100;
+            background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
         }
-        .logo-group { display: flex; align-items: center; gap: 12px; }
-        .logo-box { 
-            width: 40px; height: 40px; background: var(--card-bg); 
-            border: 1px solid var(--border); border-radius: 12px; 
-            display: flex; align-items: center; justify-content: center;
-        }
-        .logo-text h1 { font-size: 1.1rem; margin: 0; font-weight: 800; }
-        .logo-text p { font-size: 0.7rem; margin: 0; color: #666; }
+        .logo-group { display: flex; align-items: center; gap: 10px; }
+        .logo-box { width: 35px; height: 35px; border-radius: 10px; border: 1px solid var(--border); }
+        .logo-text h1 { font-size: 1rem; margin: 0; font-weight: 800; }
         .signin-pill { 
-            background: white; color: black; padding: 8px 20px; 
-            border-radius: 20px; font-weight: 700; font-size: 0.85rem; border: none; cursor: pointer;
+            background: white; color: black; padding: 8px 18px; 
+            border-radius: 20px; font-weight: 700; font-size: 0.8rem; border: none;
         }
 
-        /* HERO SECTION */
-        .hero { text-align: center; padding: 40px 10px; }
+        /* HERO - Original Design */
+        .hero { text-align: center; padding: 50px 10px; animation: fadeIn 0.8s ease; }
         .hero-tag { 
-            display: inline-block; padding: 6px 15px; border-radius: 20px; 
+            display: inline-block; padding: 6px 14px; border-radius: 20px; 
             background: var(--glass); border: 1px solid var(--border); 
-            font-size: 0.75rem; color: #999; margin-bottom: 20px;
+            font-size: 0.7rem; color: var(--secondary); margin-bottom: 20px;
         }
-        .hero h2 { font-size: 3.5rem; line-height: 0.9; margin: 0 0 20px 0; font-weight: 800; }
-        .hero p { color: #888; font-size: 1rem; line-height: 1.5; margin-bottom: 30px; }
+        .hero h2 { font-size: 3.2rem; line-height: 0.9; margin: 0 0 20px 0; font-weight: 800; letter-spacing: -2px; }
+        .hero p { color: #94a3b8; font-size: 1rem; margin-bottom: 35px; }
 
         /* BUTTONS */
         .btn-main { 
@@ -84,39 +74,72 @@
         }
         .btn-outline { 
             background: transparent; color: white; width: 100%; padding: 18px; 
-            border-radius: 40px; font-weight: 700; font-size: 1rem; 
-            border: 1px solid var(--border); text-decoration: none; display: block;
+            border-radius: 40px; font-weight: 700; border: 1px solid var(--border); 
+            text-decoration: none; display: block; text-align: center;
         }
 
-        /* PRODUCT CARDS */
-        .product-grid { margin-top: 40px; }
+        /* GLASS CARDS */
         .glass-card { 
-            background: var(--glass); border: 1px solid var(--border); 
-            border-radius: 24px; padding: 25px; margin-bottom: 20px;
-            backdrop-filter: blur(10px);
+            background: var(--card-bg); border: 1px solid var(--border); 
+            border-radius: 28px; padding: 25px; margin-bottom: 20px;
+            border-bottom: 4px solid var(--primary);
         }
-        .price-chip { font-size: 1.8rem; font-weight: 800; margin: 10px 0; }
 
-        /* 📱 BOTTOM NAV - Matches Screenshot */
+        /* 📱 BOTTOM NAVIGATION */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%; 
-            background: rgba(15, 15, 15, 0.95); border-top: 1px solid var(--border);
-            display: flex; justify-content: space-around; padding: 12px 0 25px 0;
+            background: rgba(15, 23, 42, 0.95); border-top: 1px solid var(--border);
+            display: flex; justify-content: space-around; padding: 15px 0 30px 0;
             z-index: 1000; backdrop-filter: blur(20px);
         }
         .nav-item { 
-            text-align: center; color: #666; font-size: 0.7rem; 
-            text-decoration: none; flex: 1; transition: 0.3s;
+            text-align: center; color: #64748b; font-size: 0.65rem; 
+            text-decoration: none; flex: 1; font-weight: 600;
         }
-        .nav-item.active { color: white; }
-        .nav-icon { font-size: 1.4rem; margin-bottom: 4px; display: block; }
+        .nav-item.active { color: var(--secondary); }
+        .nav-icon { font-size: 1.3rem; margin-bottom: 5px; display: block; }
 
-        /* TAB LOGIC */
+        /* AUTH MODAL */
+        #auth-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .modal-card { background: var(--card-bg); padding: 35px; border-radius: 30px; width: 90%; max-width: 400px; border: 1px solid var(--border); text-align: center; }
+        .modal-card input { width: 100%; padding: 15px; margin: 10px 0; background: var(--dark); border: 1px solid var(--border); border-radius: 12px; color: white; }
+
         .page { display: none; }
-        .page.active { display: block; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; } }
     </style>
+
+    <!-- 🔵 FIREBASE ENGINE (GOOGLE + EMAIL) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyDGB5seZrnWvXV---Yr_z11P00k1k05CLFU",
+            authDomain: "promptvaultusa.firebaseapp.com",
+            projectId: "promptvaultusa",
+            storageBucket: "promptvaultusa.firebasestorage.app",
+            messagingSenderId: "960105895017",
+            appId: "1:960105895017:web:1aa79742d36960d2bfbef8",
+            measurementId: "G-1LJT99PB2S"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        window.handleGoogle = async () => {
+            try { await signInWithPopup(auth, provider); closeModal(); } 
+            catch (e) { alert(e.message); }
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            const btn = document.getElementById('login-pill');
+            if (user) { btn.innerText = "Logout"; btn.onclick = () => signOut(auth); }
+            else { btn.innerText = "Sign In"; btn.onclick = openModal; }
+        });
+    </script>
 </head>
 <body>
 
@@ -124,110 +147,123 @@
 
 <header>
     <div class="logo-group">
-        <div class="logo-box">📦</div>
+        <img src="logo.png" class="logo-box">
         <div class="logo-text">
             <h1>PromptVault</h1>
-            <p>Premium AI Prompts</p>
         </div>
     </div>
-    <button class="signin-pill" onclick="alert('Auth coming next!')">Sign In</button>
+    <button class="signin-pill" id="login-pill">Sign In</button>
 </header>
+
+<div id="auth-modal">
+    <div class="modal-card">
+        <h2>Member Login</h2>
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="pass" placeholder="Password">
+        <button class="btn-main" onclick="handleGoogle()">Google Login</button>
+        <button style="background:transparent; color:#666; border:none; margin-top:20px;" onclick="closeModal()">Close</button>
+    </div>
+</div>
 
 <div class="container">
     
-    <!-- HOME PAGE -->
+    <!-- 🏠 HOME PAGE -->
     <div id="home" class="page active">
         <div class="hero">
-            <div class="hero-tag">Premium AI Theme Marketplace</div>
-            <h2>Style Stunning Websites with AI</h2>
-            <p>Professional AI prompts for stunning websites. <strong>Download instantly.</strong></p>
+            <div class="hero-tag">Premium AI Strategy Hub</div>
+            <h2>Command the AI Economy</h2>
+            <p>Professional AI prompts for stunning results. <strong>Download instantly.</strong></p>
             
-            <a href="#" class="btn-main" onclick="changePage('browse')">Browse Themes <span>→</span></a>
-            <a href="#" class="btn-outline" onclick="changePage('guide')">Best Practices</a>
+            <a href="javascript:void(0)" class="btn-main" onclick="changePage('browse')">Browse Vaults <span>→</span></a>
+            <a href="javascript:void(0)" class="btn-outline" onclick="changePage('guide')">Best Practices</a>
         </div>
     </div>
 
-    <!-- BROWSE PAGE -->
+    <!-- ⊞ BROWSE PAGE (All original packs) -->
     <div id="browse" class="page">
-        <h2 style="text-align:center;">Vault Collections</h2>
-        <div class="product-grid">
-            <div class="glass-card">
-                <h3>🎯 Hyper-Realism</h3>
-                <p>The flagship photography engine.</p>
-                <div class="price-chip">$9.99</div>
-                <a href="https://www.paypal.com/ncp/payment/U652KXLN348HW" class="btn-main" style="padding: 12px;">Get Access</a>
-            </div>
-            <div class="glass-card">
-                <h3>📸 Instagram Client Vault</h3>
-                <div class="price-chip">$9.99</div>
-                <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding: 12px;">Get Access</a>
-            </div>
-            <div class="glass-card" style="border-color: var(--accent);">
-                <h3 style="color:var(--accent);">🚀 Weekly VIP</h3>
-                <div class="price-chip">$9.00/mo</div>
-                <a href="https://www.paypal.com/ncp/payment/5AP4R4GTLDQV4" class="btn-main" style="padding: 12px; background:var(--accent);">Join Elite</a>
-            </div>
+        <h2 style="text-align:center; margin-bottom:30px;">Strategic Vaults</h2>
+        <div class="glass-card">
+            <h3>🎯 Hyper-Realism</h3>
+            <div style="font-size: 2rem; font-weight: 800; margin: 10px 0;">$9.99</div>
+            <a href="https://www.paypal.com/ncp/payment/U652KXLN348HW" class="btn-main" style="padding:12px;">Get Access</a>
+        </div>
+        <div class="glass-card">
+            <h3>📸 Instagram Vault</h3>
+            <div style="font-size: 2rem; font-weight: 800; margin: 10px 0;">$9.99</div>
+            <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a>
+        </div>
+        <div class="glass-card" style="border-color: var(--accent);">
+            <h3 style="color:var(--accent);">🚀 VIP VAULT</h3>
+            <div style="font-size: 2rem; font-weight: 800; margin: 10px 0;">$9.00/mo</div>
+            <a href="https://www.paypal.com/ncp/payment/5AP4R4GTLDQV4" class="btn-main" style="padding:12px; background:var(--accent);">Join Elite</a>
         </div>
     </div>
 
-    <!-- CUSTOM PAGE (AI BOT) -->
+    <!-- 👑 CUSTOM (AI LAB BOT) -->
     <div id="custom" class="page">
-        <div class="glass-card" style="min-height: 400px; display: flex; flex-direction: column; justify-content: space-between;">
-            <div>
-                <h2>AI Lab Assistant</h2>
-                <p style="color:#666">Ask me to refine your niche strategy.</p>
-                <div id="chatBox" style="background:rgba(0,0,0,0.3); padding: 15px; border-radius: 15px; height: 200px; font-size: 0.9rem; color: #aaa;">
-                    System: Lab assistant ready...
-                </div>
+        <div class="glass-card">
+            <h2>Engineering Lab</h2>
+            <div id="chatBox" style="background:rgba(0,0,0,0.3); padding:15px; border-radius:15px; height:250px; overflow-y:auto; font-size:0.85rem;">
+                <div style="color:var(--secondary)">Bot: Lab Assistant ready. Ask me anything...</div>
             </div>
-            <input type="text" placeholder="Type niche here..." style="background: #222; border: 1px solid var(--border); padding: 15px; border-radius: 12px; color: white; width: 100%;">
+            <input type="text" id="chatInput" placeholder="Enter query..." style="width:100%; margin-top:15px; background:#000; border:1px solid var(--border); padding:15px; color:white; border-radius:12px;">
+            <button class="btn-main" style="margin-top:10px; padding:12px;" onclick="sendMsg()">Send</button>
         </div>
     </div>
 
-    <!-- GUIDE PAGE -->
+    <!-- 📖 GUIDE PAGE -->
     <div id="guide" class="page">
         <div class="glass-card">
-            <h2>Instructional Guide</h2>
+            <h2>Deployment Guide</h2>
             <p><strong>1. Tool:</strong> Use GPT-4o or Midjourney v6.</p>
-            <p><strong>2. Setup:</strong> Clear browser cache for clean logic.</p>
-            <p><strong>3. Deploy:</strong> Copy from Vault and hit enter.</p>
+            <p><strong>2. DNA:</strong> Paste instructions into 'Custom Settings'.</p>
+            <p><strong>3. Run:</strong> Inject Vault logic and execute.</p>
         </div>
     </div>
 
 </div>
 
-<!-- 📱 BOTTOM NAVIGATION BAR -->
+<!-- 📱 BOTTOM NAVIGATION -->
 <nav class="bottom-nav">
     <a href="javascript:void(0)" class="nav-item active" onclick="changePage('home', this)">
-        <span class="nav-icon">🏠</span>
-        Home
+        <span class="nav-icon">🏠</span>Home
     </a>
     <a href="javascript:void(0)" class="nav-item" onclick="changePage('browse', this)">
-        <span class="nav-icon">⊞</span>
-        Browse
+        <span class="nav-icon">⊞</span>Browse
     </a>
     <a href="javascript:void(0)" class="nav-item" onclick="changePage('custom', this)">
-        <span class="nav-icon">👑</span>
-        Custom
+        <span class="nav-icon">👑</span>Custom
     </a>
     <a href="javascript:void(0)" class="nav-item" onclick="changePage('guide', this)">
-        <span class="nav-icon">📖</span>
-        Guide
+        <span class="nav-icon">📖</span>Guide
     </a>
 </nav>
 
 <script>
     function changePage(pageId, element) {
-        // Change Page
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
-
-        // Update Nav UI
-        if(element) {
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-            element.classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        
+        if(element) { element.classList.add('active'); }
+        else {
+            const items = document.querySelectorAll('.nav-item');
+            if(pageId === 'browse') items[1].classList.add('active');
+            if(pageId === 'guide') items[3].classList.add('active');
         }
         window.scrollTo(0, 0);
+    }
+    
+    function openModal() { document.getElementById('auth-modal').style.display='flex'; }
+    function closeModal() { document.getElementById('auth-modal').style.display='none'; }
+    
+    function sendMsg() {
+        const i = document.getElementById('chatInput');
+        const b = document.getElementById('chatBox');
+        if(!i.value) return;
+        b.innerHTML += `<div style="text-align:right; margin:10px 0;">You: ${i.value}</div>`;
+        setTimeout(() => { b.innerHTML += `<div style="color:var(--primary); margin:10px 0;">Bot: Analysis complete. Injecting strategy...</div>`; b.scrollTop = b.scrollHeight; }, 600);
+        i.value = '';
     }
 </script>
 
