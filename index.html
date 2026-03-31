@@ -73,7 +73,7 @@
         }
         .auth-toggle { font-size: 0.8rem; color: var(--secondary); cursor: pointer; margin-top: 15px; display: block; }
 
-        /* --- UI STYLES --- */
+        /* --- REST OF ORIGINAL STYLES --- */
         .hero { text-align: center; padding: 40px 10px; animation: fadeIn 0.8s ease; }
         .hero-tag { display: inline-block; padding: 6px 14px; border-radius: 20px; background: var(--glass); border: 1px solid var(--border); font-size: 0.7rem; color: var(--secondary); margin-bottom: 15px; }
         .hero h2 { font-size: 3.2rem; line-height: 0.9; margin: 0 0 15px 0; font-weight: 800; letter-spacing: -2px; }
@@ -82,7 +82,7 @@
         .stat-val { display: block; font-weight: 800; color: var(--secondary); font-size: 0.85rem; }
         .stat-lbl { font-size: 0.6rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
         .rating-row { display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 10px; color: var(--accent); font-size: 0.9rem; font-weight: 700; }
-        .btn-main { background: white; color: black; width: 100%; padding: 18px; border-radius: 40px; font-weight: 800; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; margin-bottom: 12px; cursor: pointer; border: none; }
+        .btn-main { background: white; color: black; width: 100%; padding: 18px; border-radius: 40px; font-weight: 800; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; margin-bottom: 12px; cursor: pointer; }
         .btn-outline { background: transparent; color: white; width: 100%; padding: 18px; border-radius: 40px; font-weight: 700; border: 1px solid var(--border); text-decoration: none; display: block; text-align: center; cursor: pointer; }
         .glass-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px; padding: 25px; margin-bottom: 20px; border-bottom: 4px solid var(--primary); position: relative; }
         .featured-gallery { margin: 30px 0; }
@@ -113,9 +113,8 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         
-        // --- STEP 1: UPDATED API KEY ---
         const firebaseConfig = {
-            apiKey: "AIzaSyDw1jTglcxP3wvZNfNLntBcBjZyZOSLoXM",
+            apiKey: "AIzaSyDGB5seZrnWvXV---Yr_z11P00k1k05CLFU",
             authDomain: "promptvaultusa.firebaseapp.com",
             projectId: "promptvaultusa",
             storageBucket: "promptvaultusa.firebasestorage.app",
@@ -129,45 +128,32 @@
 
         // AUTH FUNCTIONS
         window.handleGoogle = async () => {
-            try { 
-                await signInWithPopup(auth, provider); 
-                window.closeModal(); 
-            } catch (e) { 
-                alert("Google Sign-In Error: " + e.message); 
-            }
+            try { await signInWithPopup(auth, provider); closeModal(); } 
+            catch (e) { alert(e.message); }
         };
 
         window.handleEmailAuth = async () => {
             const email = document.getElementById('auth-email').value;
             const pass = document.getElementById('auth-pass').value;
-            const title = document.getElementById('auth-title').innerText;
+            const isSignUp = document.getElementById('auth-title').innerText === "Create Account";
 
-            if (!email || !pass) return alert("Please fill in all fields");
-            if (pass.length < 6) return alert("Password should be at least 6 characters");
+            if (!email || !pass) return alert("Fill in all fields");
 
             try {
-                if (title === "Create Account") {
-                    await createUserWithEmailAndPassword(auth, email, pass);
-                } else {
-                    await signInWithEmailAndPassword(auth, email, pass);
-                }
-                window.closeModal();
-            } catch (e) { 
-                alert("Auth Error: " + e.message); 
-            }
+                if (isSignUp) await createUserWithEmailAndPassword(auth, email, pass);
+                else await signInWithEmailAndPassword(auth, email, pass);
+                closeModal();
+            } catch (e) { alert(e.message); }
         };
 
-        // TRACK AUTH STATE
         onAuthStateChanged(auth, (user) => {
             const btn = document.getElementById('login-pill');
             if (user) { 
                 btn.innerText = "Logout"; 
-                btn.onclick = () => {
-                    if(confirm("Sign out of PromptVault?")) signOut(auth);
-                }; 
+                btn.onclick = () => signOut(auth); 
             } else { 
                 btn.innerText = "Sign In"; 
-                btn.onclick = window.openModal; 
+                btn.onclick = openModal; 
             }
         });
     </script>
@@ -184,7 +170,7 @@
         <input type="password" id="auth-pass" class="auth-input" placeholder="Password">
         <button class="btn-main" style="margin: 10px 0;" onclick="handleEmailAuth()">Continue</button>
         <div style="font-size: 0.7rem; color: #666; margin: 5px 0;">OR</div>
-        <button class="btn-outline" style="background: white; color: black; border: none; display: flex; align-items: center; justify-content: center; gap: 8px;" onclick="handleGoogle()">
+        <button class="btn-outline" style="background: white; color: black; border: none;" onclick="handleGoogle()">
             Continue with Google
         </button>
         <span class="auth-toggle" id="auth-toggle" onclick="toggleAuthMode()">New here? Create an account</span>
@@ -277,6 +263,14 @@
                     <div class="accordion-content">Members receive fresh logic updates every Monday.</div>
                 </div>
             </div>
+
+            <div style="text-align:left; margin-top:40px;">
+                <h3 style="font-size:1.2rem; margin-bottom:20px;">What Founders Say</h3>
+                <div class="review-card">
+                    "The Hyper-Realism pack literally changed my design workflow overnight. 10/10."
+                    <div class="reviewer">Sarah K. • Creative Director</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -293,11 +287,35 @@
             <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.99</div>
             <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a>
         </div>
-        <!-- Simplified browse items for clarity -->
+        <div class="glass-card">
+            <h3>📱 TikTok/Reels Viral Pack</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$7.00</div>
+            <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a>
+        </div>
+        <div class="glass-card">
+            <h3>🏠 Real Estate Edge</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$7.00</div>
+            <a href="https://www.paypal.com/ncp/payment/NAVXULVJESS6Q" class="btn-main" style="padding:12px;">Get Access</a>
+        </div>
+        <div class="glass-card">
+            <h3>💼 Freelance Proposal Edge</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$7.00</div>
+            <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a>
+        </div>
+        <div class="glass-card">
+            <h3>🛒 Shopify Seller Master Pack</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.99</div>
+            <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a>
+        </div>
         <div class="glass-card">
             <h3>🤝 Affiliate Partner Program</h3>
             <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">Earn 40%</div>
             <a href="#" class="btn-main" style="padding:12px;">Join Network</a>
+        </div>
+        <div class="glass-card" style="border-color: var(--accent);">
+            <h3 style="color:var(--accent);">🚀 VIP VAULT (All Access)</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.00/mo</div>
+            <a href="https://www.paypal.com/ncp/payment/5AP4R4GTLDQV4" class="btn-main" style="padding:12px; background:var(--accent);">Join Elite</a>
         </div>
     </div>
 
@@ -332,7 +350,6 @@
 </nav>
 
 <script>
-    // NAVIGATION LOGIC
     window.changePage = (pageId, element) => {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(pageId).classList.add('active');
@@ -341,7 +358,6 @@
         window.scrollTo(0, 0);
     }
     
-    // MODAL LOGIC
     window.openModal = () => document.getElementById('auth-overlay').style.display = 'flex';
     window.closeModal = () => document.getElementById('auth-overlay').style.display = 'none';
     
@@ -357,16 +373,12 @@
         }
     }
 
-    // UTILITIES
     window.sendMsg = () => {
         const i = document.getElementById('chatInput');
         const b = document.getElementById('chatBox');
         if(!i.value) return;
         b.innerHTML += `<div style="text-align:right; margin:10px 0; color:#fff;">${i.value}</div>`;
-        setTimeout(() => { 
-            b.innerHTML += `<div style="color:var(--primary); margin:10px 0;">Bot: Analysis complete.</div>`; 
-            b.scrollTop = b.scrollHeight; 
-        }, 600);
+        setTimeout(() => { b.innerHTML += `<div style="color:var(--primary); margin:10px 0;">Bot: Analysis complete.</div>`; b.scrollTop = b.scrollHeight; }, 600);
         i.value = '';
     }
 
@@ -377,7 +389,6 @@
 
     window.toggleAccordion = (el) => el.classList.toggle('active');
 
-    // LIVE PROOF NOTIFICATION
     window.onload = () => {
         setTimeout(() => {
             const proof = document.getElementById('live-proof');
