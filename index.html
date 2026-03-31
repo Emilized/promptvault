@@ -69,10 +69,8 @@
 
         .glass-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px; padding: 25px; margin-bottom: 20px; border-bottom: 4px solid var(--primary); position: relative; }
 
-        /* Social Proof Pop Up */
         #live-proof { position: fixed; bottom: 100px; left: 20px; right: 20px; background: white; color: #020617; border-radius: 16px; padding: 12px 18px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); display: flex; align-items: center; gap: 12px; transform: translateY(200%); transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2000; max-width: 460px; margin: auto; }
 
-        /* Reviews Styling */
         .review-card { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 20px; margin-bottom: 15px; font-size: 0.85rem; border: 1px solid var(--border); }
         .reviewer { display: flex; align-items: center; gap: 10px; margin-top: 10px; font-weight: 700; color: var(--secondary); }
 
@@ -127,7 +125,6 @@
     <button class="signin-pill" id="login-pill">Sign In</button>
 </header>
 
-<!-- Social Proof Pop up -->
 <div id="live-proof">
     <div style="background: var(--primary); width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 0.7rem;">US</div>
     <div>
@@ -149,16 +146,14 @@
                 <span>4.9/5 (1,200+ Reviews)</span>
             </div>
 
-            <a href="javascript:void(0)" class="btn-main" onclick="changePage('browse')">Browse 7 Packs <span>→</span></a>
+            <a href="javascript:void(0)" class="btn-main" onclick="changePage('browse')">Browse 7 Strategic Packs <span>→</span></a>
             
-            <!-- Free Prompt of the Day -->
             <div class="glass-card" style="margin-top:30px; border-bottom: 4px solid var(--accent);">
                 <span style="color:var(--accent); font-weight:800; font-size:0.7rem;">FREE PROMPT OF THE DAY</span>
                 <p style="font-size:0.85rem; color:#fff; margin:10px 0;">"Generate a cinematic 8k photorealistic portrait of [Subject] with dramatic chiaroscuro lighting..."</p>
                 <button class="btn-outline" style="padding:10px; font-size:0.8rem;" onclick="copyPrompt()">Copy Free Prompt</button>
             </div>
 
-            <!-- Reviews Section -->
             <div style="text-align:left; margin-top:40px;">
                 <h3 style="font-size:1.2rem; margin-bottom:20px;">What Founders Say</h3>
                 <div class="review-card">
@@ -173,23 +168,58 @@
         </div>
     </div>
 
-    <!-- ⊞ BROWSE PAGE (All 7 Packs) -->
+    <!-- ⊞ BROWSE PAGE (The 7 Strategic Packs) -->
     <div id="browse" class="page">
         <h2 style="text-align:center; margin-bottom:25px;">Strategic Vaults</h2>
         
-        <div class="glass-card"><h3>🎯 Hyper-Realism Masterclass</h3><div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.99</div><a href="https://www.paypal.com/ncp/payment/U652KXLN348HW" class="btn-main" style="padding:12px;">Get Access</a></div>
+        <!-- Pack 1 -->
+        <div class="glass-card">
+            <h3>🎯 Hyper-Realism Masterclass</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.99</div>
+            <a href="https://www.paypal.com/ncp/payment/U652KXLN348HW" class="btn-main" style="padding:12px;">Get Access</a>
+        </div>
         
-        <div class="glass-card"><h3>📸 Instagram Client Vault</h3><div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.99</div><a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a></div>
+        <!-- Pack 2 -->
+        <div class="glass-card">
+            <h3>📸 Instagram Client Vault</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.99</div>
+            <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a>
+        </div>
         
-        <div class="glass-card"><h3>📱 TikTok/Reels Viral Pack</h3><div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$7.00</div><a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a></div>
+        <!-- Pack 3 -->
+        <div class="glass-card">
+            <h3>📱 TikTok/Reels Viral Pack</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$7.00</div>
+            <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a>
+        </div>
         
-        <div class="glass-card"><h3>🏠 Real Estate Edge</h3><div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$7.00</div><a href="https://www.paypal.com/ncp/payment/NAVXULVJESS6Q" class="btn-main" style="padding:12px;">Get Access</a></div>
+        <!-- Pack 4 -->
+        <div class="glass-card">
+            <h3>🏠 Real Estate Edge</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$7.00</div>
+            <a href="https://www.paypal.com/ncp/payment/NAVXULVJESS6Q" class="btn-main" style="padding:12px;">Get Access</a>
+        </div>
         
-        <div class="glass-card"><h3>💼 Freelance Proposal Edge</h3><div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$7.00</div><a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a></div>
+        <!-- Pack 5 -->
+        <div class="glass-card">
+            <h3>💼 Freelance Proposal Edge</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$7.00</div>
+            <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a>
+        </div>
         
-        <div class="glass-card"><h3>🤝 Affiliate Partner Program</h3><div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">Earn 40%</div><a href="#" class="btn-main" style="padding:12px;">Join Network</a></div>
+        <!-- Pack 6 -->
+        <div class="glass-card">
+            <h3>🤝 Affiliate Partner Program</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">Earn 40%</div>
+            <a href="#" class="btn-main" style="padding:12px;">Join Network</a>
+        </div>
 
-        <div class="glass-card" style="border-color: var(--accent);"><h3 style="color:var(--accent);">🚀 VIP VAULT (All Access)</h3><div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.00/mo</div><a href="https://www.paypal.com/ncp/payment/5AP4R4GTLDQV4" class="btn-main" style="padding:12px; background:var(--accent);">Join Elite</a></div>
+        <!-- Pack 7 -->
+        <div class="glass-card" style="border-color: var(--accent);">
+            <h3 style="color:var(--accent);">🚀 VIP VAULT (All Access)</h3>
+            <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.00/mo</div>
+            <a href="https://www.paypal.com/ncp/payment/5AP4R4GTLDQV4" class="btn-main" style="padding:12px; background:var(--accent);">Join Elite</a>
+        </div>
     </div>
 
     <!-- 👑 CUSTOM (AI LAB BOT) -->
@@ -242,10 +272,12 @@
     }
 
     function copyPrompt() {
-        alert("Prompt copied to clipboard!");
+        const text = "Generate a cinematic 8k photorealistic portrait of [Subject] with dramatic chiaroscuro lighting...";
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Free Prompt Copied!");
+        });
     }
 
-    // Social Proof Trigger
     window.onload = () => {
         setTimeout(() => {
             const proof = document.getElementById('live-proof');
