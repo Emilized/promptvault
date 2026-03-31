@@ -28,6 +28,7 @@
         .logo-area { display: flex; align-items: center; gap: 12px; font-weight: 800; font-size: 1.2rem; cursor: pointer; }
         .logo-img { height: 38px; width: 38px; border-radius: 10px; border: 1px solid var(--border); }
         
+        .nav-actions { display: flex; gap: 12px; align-items: center; }
         .btn { padding: 10px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; border: none; font-size: 0.8rem; display: flex; align-items: center; gap: 8px; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-google { background: white; color: #020617; border: 1px solid #ddd; }
@@ -59,6 +60,7 @@
         @media (max-width: 900px) { .tab-content.active { grid-template-columns: 1fr; } }
     </style>
 
+    <!-- 🔵 FIXED FIREBASE AUTH SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
@@ -80,26 +82,34 @@
 
         window.handleGoogleAuth = async () => {
             try {
+                console.log("Initializing Google Popup...");
                 const result = await signInWithPopup(auth, provider);
                 alert("Welcome, " + result.user.displayName);
-                closeModal();
+                if(window.closeModal) window.closeModal();
             } catch (e) {
+                console.error("Auth Error:", e.code);
                 if (e.code === 'auth/unauthorized-domain') {
-                    alert("ERROR: Add promptvaultusa.shop to 'Authorized Domains' in Firebase Console.");
-                } else { alert("Login failed: " + e.message); }
+                    alert("CRITICAL ERROR: You must add 'promptvaultusa.shop' to Authorized Domains in Firebase Settings.");
+                } else if (e.code === 'auth/popup-closed-by-user') {
+                    alert("Login cancelled. Please keep the popup window open.");
+                } else {
+                    alert("Login Error: " + e.message);
+                }
             }
         };
 
         window.handleEmailAuth = async () => {
             const email = document.getElementById('auth-email').value;
             const pass = document.getElementById('auth-pass').value;
-            if(!email || !pass) return alert("Fill in all fields.");
+            if(!email || !pass) return alert("Please enter email and password.");
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
-                closeModal();
+                if(window.closeModal) window.closeModal();
             } catch (e) {
-                try { await createUserWithEmailAndPassword(auth, email, pass); closeModal(); }
-                catch (err) { alert(err.message); }
+                try {
+                    await createUserWithEmailAndPassword(auth, email, pass);
+                    if(window.closeModal) window.closeModal();
+                } catch (err) { alert(err.message); }
             }
         };
 
@@ -110,12 +120,14 @@
             if (user) {
                 actions.innerHTML = `
                     <div style="display:flex; align-items:center; gap:10px;">
-                        <img src="${user.photoURL || 'https://via.placeholder.com/30'}" style="width:30px; border-radius:50%; border:1px solid var(--secondary);">
+                        <img src="${user.photoURL || 'https://via.placeholder.com/30'}" style="width:32px; height:32px; border-radius:50%; border:2px solid var(--secondary);">
                         <button class="btn btn-logout" onclick="handleLogout()">Logout</button>
                     </div>`;
             } else {
                 actions.innerHTML = `
-                    <button class="btn btn-google" onclick="handleGoogleAuth()">Google Login</button>
+                    <button class="btn btn-google" onclick="handleGoogleAuth()">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="14"> Google Login
+                    </button>
                     <button class="btn btn-primary" onclick="openModal()">Email Access</button>`;
             }
         });
@@ -131,6 +143,7 @@
     <div class="nav-actions" id="nav-actions"></div>
 </nav>
 
+<!-- Auth Modal -->
 <div class="modal-overlay" id="authModal">
     <div class="modal-card">
         <h2>Vault Access</h2>
@@ -162,46 +175,45 @@
         <div class="tab-link" onclick="openTab(event, 'vip')" style="color:var(--accent);">🚀 VIP VAULT</div>
     </div>
 
+    <!-- 1. HOME GUIDE -->
     <div id="guide" class="tab-content active">
         <div class="glass-card">
             <h2>Vault Setup & Guide</h2>
             <div style="margin-top:20px;">
                 <div style="margin-bottom:20px; border-left: 2px solid var(--secondary); padding-left: 15px;">
-                    <h3>1. Browser Configuration</h3>
-                    <p>Use a dedicated profile. Clean cache ensures no logic overlaps in GPT-4.</p>
+                    <h3>1. Configuration</h3>
+                    <p>Ensure you are using GPT-4o or Midjourney v6 for maximum precision.</p>
                 </div>
                 <div style="margin-bottom:20px; border-left: 2px solid var(--secondary); padding-left: 15px;">
                     <h3>2. DNA Injection</h3>
-                    <p>Paste Vault keys into 'Custom Instructions' for permanent brand alignment.</p>
+                    <p>Paste Vault instructions into 'Custom Instructions' to align the AI to your brand.</p>
                 </div>
             </div>
         </div>
         <div class="glass-card" style="text-align:center;">
-            <p>"Precision is better than speed. Align your context before you prompt."</p>
+            <p>"Align context before you prompt."</p>
             <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="openTab(event, 'lab')">Open Free Lab Bot</button>
         </div>
     </div>
 
+    <!-- 2. AI LAB BOT -->
     <div id="lab" class="tab-content">
         <div class="chat-container">
             <h3>Lab Assistant</h3>
-            <div class="chat-box" id="cBox"><div class="msg bot">Tell me your niche or ask for a strategy tip.</div></div>
+            <div class="chat-box" id="cBox"><div class="msg bot">What's your current AI challenge? Ask for a tip below.</div></div>
             <div style="display:flex; gap:10px;">
                 <input type="text" id="cInput" class="chat-input" placeholder="Message Lab Assistant...">
                 <button class="btn btn-primary" onclick="sendMsg()">Send</button>
             </div>
         </div>
-        <div class="glass-card">
-            <p>Member accounts receive priority processing. Log in to unlock advanced logic.</p>
-            <button class="btn btn-primary" style="width:100%; justify-content:center;" onclick="openModal()">Join Now Free</button>
-        </div>
     </div>
 
+    <!-- 3. PRODUCT TABS -->
     <div id="hyperreal" class="tab-content">
         <div class="glass-card">
             <h2>Hyper-Realism Masterclass</h2>
             <div style="font-size:3rem; font-weight:800; margin:10px 0;">$9.99</div>
-            <p>80+ Premium engineered prompts for photorealism.</p>
+            <p>80+ Premium engineered prompts for cinematic photorealism.</p>
             <a href="https://www.paypal.com/ncp/payment/U652KXLN348HW" class="btn btn-primary" style="width:100%; padding:20px; justify-content:center;">UNLOCK ACCESS</a>
         </div>
         <div class="glass-card"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80" style="width:100%; border-radius:15px;"></div>
@@ -211,7 +223,7 @@
         <div class="glass-card" style="border-top: 4px solid var(--accent);">
             <h2 style="color:var(--accent);">Elite VIP Membership</h2>
             <div style="font-size:3rem; font-weight:800; margin:10px 0;">$9.00<span style="font-size:1rem">/mo</span></div>
-            <p>Access EVERY pack + Weekly strategic updates.</p>
+            <p>Access EVERY current and future pack + Weekly strategic updates.</p>
             <a href="https://www.paypal.com/ncp/payment/5AP4R4GTLDQV4" class="btn btn-primary" style="background:var(--accent); color:black; width:100%; justify-content:center;">JOIN THE ELITE</a>
         </div>
     </div>
@@ -230,7 +242,7 @@
         const i = document.getElementById('cInput'), b = document.getElementById('cBox');
         if(!i.value) return;
         const u = document.createElement('div'); u.className = 'msg user'; u.innerText = i.value; b.appendChild(u);
-        const bt = document.createElement('div'); bt.className = 'msg bot'; bt.innerText = "Processing analysis... For high-tier outputs, try the Hyper-Realism DNA.";
+        const bt = document.createElement('div'); bt.className = 'msg bot'; bt.innerText = "Analyzing niche... For high-tier results, try the Hyper-Realism DNA.";
         setTimeout(() => { b.appendChild(bt); b.scrollTop = b.scrollHeight; }, 700);
         i.value = "";
     };
