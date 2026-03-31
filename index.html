@@ -62,12 +62,34 @@
         }
         .hero h2 { font-size: 3.2rem; line-height: 0.9; margin: 0 0 15px 0; font-weight: 800; letter-spacing: -2px; }
         
-        .rating-row { display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 20px; color: var(--accent); font-size: 0.9rem; font-weight: 700; }
+        /* Stats Ribbon */
+        .stats-ribbon { display: flex; justify-content: space-around; background: var(--glass); border: 1px solid var(--border); border-radius: 15px; padding: 12px 5px; margin: 20px 0; }
+        .stat-item { text-align: center; }
+        .stat-val { display: block; font-weight: 800; color: var(--secondary); font-size: 0.85rem; }
+        .stat-lbl { font-size: 0.6rem; color: #64748b; text-transform: uppercase; letter-spacing: 1px; }
 
-        .btn-main { background: white; color: black; width: 100%; padding: 18px; border-radius: 40px; font-weight: 800; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; margin-bottom: 12px; }
-        .btn-outline { background: transparent; color: white; width: 100%; padding: 18px; border-radius: 40px; font-weight: 700; border: 1px solid var(--border); text-decoration: none; display: block; text-align: center; }
+        .rating-row { display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 10px; color: var(--accent); font-size: 0.9rem; font-weight: 700; }
+
+        .btn-main { background: white; color: black; width: 100%; padding: 18px; border-radius: 40px; font-weight: 800; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; margin-bottom: 12px; cursor: pointer; }
+        .btn-outline { background: transparent; color: white; width: 100%; padding: 18px; border-radius: 40px; font-weight: 700; border: 1px solid var(--border); text-decoration: none; display: block; text-align: center; cursor: pointer; }
 
         .glass-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 28px; padding: 25px; margin-bottom: 20px; border-bottom: 4px solid var(--primary); position: relative; }
+
+        /* Featured Gallery */
+        .featured-gallery { margin: 30px 0; }
+        .gallery-item { margin-bottom: 25px; border-radius: 20px; overflow: hidden; background: var(--card-bg); border: 1px solid var(--border); }
+        .gallery-img { width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid var(--border); }
+        .gallery-info { padding: 15px; }
+        .gallery-title { font-weight: 800; font-size: 1rem; color: #fff; margin-bottom: 5px; }
+        .gallery-desc { font-size: 0.75rem; color: #94a3b8; }
+
+        /* Why Choose Tabs */
+        .why-tabs { margin-top: 40px; }
+        .why-header { font-size: 1.2rem; font-weight: 800; margin-bottom: 20px; text-align: center; }
+        .accordion-item { border: 1px solid var(--border); border-radius: 15px; margin-bottom: 10px; overflow: hidden; }
+        .accordion-trigger { width: 100%; padding: 15px; background: var(--glass); border: none; color: white; text-align: left; font-weight: 700; font-size: 0.85rem; cursor: pointer; display: flex; justify-content: space-between; }
+        .accordion-content { display: none; padding: 15px; font-size: 0.8rem; color: #94a3b8; background: rgba(0,0,0,0.2); }
+        .accordion-item.active .accordion-content { display: block; }
 
         #live-proof { position: fixed; bottom: 100px; left: 20px; right: 20px; background: white; color: #020617; border-radius: 16px; padding: 12px 18px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); display: flex; align-items: center; gap: 12px; transform: translateY(200%); transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2000; max-width: 460px; margin: auto; }
 
@@ -143,15 +165,72 @@
             
             <div class="rating-row">
                 <span>⭐⭐⭐⭐⭐</span>
-                <span>4.9/5 (1,200+ Reviews)</span>
+                <span>4.9 Average Rating</span>
+            </div>
+
+            <!-- New Stats Ribbon -->
+            <div class="stats-ribbon">
+                <div class="stat-item">
+                    <span class="stat-val">7 Premium</span>
+                    <span class="stat-lbl">Packs</span>
+                </div>
+                <div class="stat-item" style="border-left: 1px solid var(--border); border-right: 1px solid var(--border); padding: 0 15px;">
+                    <span class="stat-val">4.9/5</span>
+                    <span class="stat-lbl">Rating</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-val">20k+</span>
+                    <span class="stat-lbl">Customers</span>
+                </div>
             </div>
 
             <a href="javascript:void(0)" class="btn-main" onclick="changePage('browse')">Browse Strategic Packs <span>→</span></a>
             
-            <div class="glass-card" style="margin-top:30px; border-bottom: 4px solid var(--accent);">
+            <!-- Featured Gallery Section -->
+            <div class="featured-gallery">
+                <h3 style="font-size: 1.1rem; text-align: left; margin-bottom: 20px;">Featured Collections</h3>
+                
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&w=500&q=80" class="gallery-img" alt="Hyperrealism">
+                    <div class="gallery-info">
+                        <div class="gallery-title">🎯 Hyper-Realism DNA</div>
+                        <div class="gallery-desc">Engineered for cinematic photorealism in MJ & Flux.</div>
+                    </div>
+                </div>
+
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=500&q=80" class="gallery-img" alt="Social Media">
+                    <div class="gallery-info">
+                        <div class="gallery-title">📸 Social Outreach Vault</div>
+                        <div class="gallery-desc">High-conversion scripts for Instagram & LinkedIn.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card" style="border-bottom: 4px solid var(--accent);">
                 <span style="color:var(--accent); font-weight:800; font-size:0.7rem;">FREE PROMPT OF THE DAY</span>
                 <p style="font-size:0.85rem; color:#fff; margin:10px 0;">"Generate a cinematic 8k photorealistic portrait of [Subject] with dramatic chiaroscuro lighting..."</p>
                 <button class="btn-outline" style="padding:10px; font-size:0.8rem;" onclick="copyPrompt()">Copy Free Prompt</button>
+            </div>
+
+            <!-- Why Choose Section -->
+            <div class="why-tabs">
+                <div class="why-header">Why Choose PromptVaultUSA?</div>
+                
+                <div class="accordion-item" onclick="toggleAccordion(this)">
+                    <button class="accordion-trigger">Strategic Logic<span>+</span></button>
+                    <div class="accordion-content">Unlike generic prompts, ours are engineered with "Contextual DNA" to ensure the AI follows complex brand rules and high-end aesthetics every time.</div>
+                </div>
+
+                <div class="accordion-item" onclick="toggleAccordion(this)">
+                    <button class="accordion-trigger">Verified Scaling<span>+</span></button>
+                    <div class="accordion-content">Trusted by 20,000+ digital entrepreneurs and agencies to automate content creation and high-ticket client outreach with precision.</div>
+                </div>
+
+                <div class="accordion-item" onclick="toggleAccordion(this)">
+                    <button class="accordion-trigger">Weekly Updates<span>+</span></button>
+                    <div class="accordion-content">The AI world moves fast. Our VIP members receive fresh logic updates every Monday to stay ahead of the latest model changes (GPT-4o, Midjourney v6, Flux).</div>
+                </div>
             </div>
 
             <div style="text-align:left; margin-top:40px;">
@@ -168,60 +247,52 @@
         </div>
     </div>
 
-    <!-- ⊞ BROWSE PAGE (All Strategic Packs) -->
+    <!-- ⊞ BROWSE PAGE (The Packs) -->
     <div id="browse" class="page">
         <h2 style="text-align:center; margin-bottom:25px;">Strategic Vaults</h2>
         
-        <!-- Pack 1 -->
         <div class="glass-card">
             <h3>🎯 Hyper-Realism Masterclass</h3>
             <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.99</div>
             <a href="https://www.paypal.com/ncp/payment/U652KXLN348HW" class="btn-main" style="padding:12px;">Get Access</a>
         </div>
         
-        <!-- Pack 2 -->
         <div class="glass-card">
             <h3>📸 Instagram Client Vault</h3>
             <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.99</div>
             <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a>
         </div>
         
-        <!-- Pack 3 -->
         <div class="glass-card">
             <h3>📱 TikTok/Reels Viral Pack</h3>
             <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$7.00</div>
             <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a>
         </div>
         
-        <!-- Pack 4 -->
         <div class="glass-card">
             <h3>🏠 Real Estate Edge</h3>
             <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$7.00</div>
             <a href="https://www.paypal.com/ncp/payment/NAVXULVJESS6Q" class="btn-main" style="padding:12px;">Get Access</a>
         </div>
         
-        <!-- Pack 5 -->
         <div class="glass-card">
             <h3>💼 Freelance Proposal Edge</h3>
             <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$7.00</div>
             <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a>
         </div>
 
-        <!-- NEW: Pack 6 - Shopify Seller -->
         <div class="glass-card">
             <h3>🛒 Shopify Seller Master Pack</h3>
             <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.99</div>
             <a href="https://www.paypal.com/ncp/payment/ZCDF3DAHLCEBL" class="btn-main" style="padding:12px;">Get Access</a>
         </div>
         
-        <!-- Pack 7 -->
         <div class="glass-card">
             <h3>🤝 Affiliate Partner Program</h3>
             <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">Earn 40%</div>
             <a href="#" class="btn-main" style="padding:12px;">Join Network</a>
         </div>
 
-        <!-- Pack 8 -->
         <div class="glass-card" style="border-color: var(--accent);">
             <h3 style="color:var(--accent);">🚀 VIP VAULT (All Access)</h3>
             <div style="font-size: 1.8rem; font-weight: 800; margin: 10px 0;">$9.00/mo</div>
@@ -248,7 +319,6 @@
             <p><strong>1. Environment:</strong> Use GPT-4o or Midjourney v6.</p>
             <p><strong>2. Setup:</strong> Paste DNA logic into 'Custom Instructions'.</p>
             <p><strong>3. Execute:</strong> Inject Vault prompt and refine.</p>
-            <p><strong>4. Resources:</strong> Access your sheets via the member portal after purchase.</p>
         </div>
     </div>
 
@@ -286,11 +356,17 @@
         });
     }
 
+    function toggleAccordion(el) {
+        el.classList.toggle('active');
+    }
+
     window.onload = () => {
         setTimeout(() => {
             const proof = document.getElementById('live-proof');
-            proof.style.transform = "translateY(0)";
-            setTimeout(() => { proof.style.transform = "translateY(200%)"; }, 6000);
+            if(proof) {
+                proof.style.transform = "translateY(0)";
+                setTimeout(() => { proof.style.transform = "translateY(200%)"; }, 6000);
+            }
         }, 4000);
     };
 </script>
