@@ -1,0 +1,18 @@
+[
+  {
+    "id": "hyper-realism",
+    "name": "Hyper-Realism DNA v6",
+    "price": 15.00,
+    "img": "1000098630.jpg",
+    "desc": "The ultimate blueprint for 2026 AI content. Master hyper-realistic visuals.",
+    "paylink": "YOUR_STRIPE_LINK_1"
+  },
+  {
+    "id": "ecomm-lifestyle",
+    "name": "E-comm Lifestyle Pack",
+    "price": 12.00,
+    "img": "1000098629.jpg",
+    "desc": "Professional prompts for high-converting e-commerce lifestyle shots.",
+    "paylink": "YOUR_STRIPE_LINK_2"
+  }
+]
