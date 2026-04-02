@@ -188,10 +188,11 @@
         }
     };
 
+    // Updated product list with paths to individual pages
     const products = [
-        { id: 1, name: "Hyper-Realism DNA v6", price: 15.00, img: "1000098630.jpg" },
-        { id: 2, name: "E-comm Lifestyle Pack", price: 12.00, img: "1000098629.jpg" },
-        { id: 3, name: "Viral Space Hooks", price: 9.00, img: "1000098632.jpg" }
+        { id: 1, name: "Hyper-Realism DNA v6", price: 15.00, img: "1000098630.jpg", link: "products/hyper-realism.html" },
+        { id: 2, name: "E-comm Lifestyle Pack", price: 12.00, img: "1000098629.jpg", link: "#" },
+        { id: 3, name: "Viral Space Hooks", price: 9.00, img: "1000098632.jpg", link: "#" }
     ];
 
     function renderProducts() {
@@ -203,7 +204,8 @@
                 </div>
                 <div style="font-weight:800; font-size:1.1rem; margin-bottom:5px;">${p.name}</div>
                 <div style="color:var(--secondary); font-weight:800; font-size:1.3rem; margin-bottom:15px;">$${p.price.toFixed(2)}</div>
-                <button onclick="alert('Added to cart!')" class="btn-main" style="padding:12px; font-size:0.95rem;">Add to Vault</button>
+                
+                <a href="${p.link}" class="btn-main" style="padding:12px; font-size:0.95rem; text-decoration:none;">View Details</a>
             </div>
         `).join('');
     }
