@@ -1,18 +1,252 @@
 [
   {
-    "id": "hyper-realism",
-    "name": "Hyper-Realism DNA v6",
-    "price": 15.00,
-    "img": "1000098630.jpg",
-    "desc": "The ultimate blueprint for 2026 AI content. Master hyper-realistic visuals.",
-    "paylink": "YOUR_STRIPE_LINK_1"
+    "id": "niche_001",
+    "name": "Real Estate Lead Generation",
+    "description": "AI prompts for listing descriptions, cold outreach, and follow-ups to attract buyers and sellers."
   },
   {
-    "id": "ecomm-lifestyle",
-    "name": "E-comm Lifestyle Pack",
-    "price": 12.00,
-    "img": "1000098629.jpg",
-    "desc": "Professional prompts for high-converting e-commerce lifestyle shots.",
-    "paylink": "YOUR_STRIPE_LINK_2"
+    "id": "niche_002",
+    "name": "Freelancer Client Acquisition",
+    "description": "Prompts for proposals, outreach messages, and negotiation scripts for freelancers."
+  },
+  {
+    "id": "niche_003",
+    "name": "TikTok Affiliate Marketing",
+    "description": "Viral hooks, captions, and scripts for promoting affiliate products on TikTok."
+  },
+  {
+    "id": "niche_004",
+    "name": "YouTube Automation",
+    "description": "Scripts, video ideas, and content planning prompts for faceless YouTube channels."
+  },
+  {
+    "id": "niche_005",
+    "name": "E-commerce Product Descriptions",
+    "description": "High-converting product descriptions for Shopify, Amazon, and dropshipping stores."
+  },
+  {
+    "id": "niche_006",
+    "name": "Copywriting Sales Pages",
+    "description": "Prompts to create persuasive landing pages and sales funnels."
+  },
+  {
+    "id": "niche_007",
+    "name": "Email Marketing Campaigns",
+    "description": "Email sequences for promotions, newsletters, and customer retention."
+  },
+  {
+    "id": "niche_008",
+    "name": "Instagram Growth",
+    "description": "Captions, reels ideas, and engagement strategies for Instagram."
+  },
+  {
+    "id": "niche_009",
+    "name": "Facebook Ads Copy",
+    "description": "High-converting ad copy for Facebook and Meta campaigns."
+  },
+  {
+    "id": "niche_010",
+    "name": "Personal Branding",
+    "description": "Content ideas and storytelling prompts to build authority online."
+  },
+  {
+    "id": "niche_011",
+    "name": "Resume & Job Applications",
+    "description": "Resume writing, cover letters, and interview preparation prompts."
+  },
+  {
+    "id": "niche_012",
+    "name": "Startup Pitch Decks",
+    "description": "Prompts to create investor-ready presentations and business pitches."
+  },
+  {
+    "id": "niche_013",
+    "name": "Blog Content Creation",
+    "description": "SEO blog outlines, articles, and keyword strategies."
+  },
+  {
+    "id": "niche_014",
+    "name": "SEO Optimization",
+    "description": "Prompts for keyword research, meta descriptions, and ranking strategies."
+  },
+  {
+    "id": "niche_015",
+    "name": "Podcast Scripts",
+    "description": "Episode outlines, intros, and storytelling frameworks for podcasts."
+  },
+  {
+    "id": "niche_016",
+    "name": "Online Course Creation",
+    "description": "Prompts for structuring and launching digital courses."
+  },
+  {
+    "id": "niche_017",
+    "name": "Digital Product Sales",
+    "description": "Ideas and marketing prompts for ebooks, templates, and guides."
+  },
+  {
+    "id": "niche_018",
+    "name": "AI Art Generation",
+    "description": "Creative prompts for generating unique AI artwork."
+  },
+  {
+    "id": "niche_019",
+    "name": "Midjourney Prompt Pack",
+    "description": "Highly detailed prompts for creating stunning AI images."
+  },
+  {
+    "id": "niche_020",
+    "name": "Chatbot Scripts",
+    "description": "Prompts for building conversational AI flows and responses."
+  },
+  {
+    "id": "niche_021",
+    "name": "Customer Support Replies",
+    "description": "Templates for professional and fast customer service responses."
+  },
+  {
+    "id": "niche_022",
+    "name": "Cold Email Outreach",
+    "description": "Effective cold email scripts for lead generation."
+  },
+  {
+    "id": "niche_023",
+    "name": "LinkedIn Networking",
+    "description": "Connection messages and personal branding prompts for LinkedIn."
+  },
+  {
+    "id": "niche_024",
+    "name": "Dropshipping Store Setup",
+    "description": "Prompts for product selection, store branding, and marketing."
+  },
+  {
+    "id": "niche_025",
+    "name": "Affiliate Blog Writing",
+    "description": "Product reviews and comparison posts for affiliate earnings."
+  },
+  {
+    "id": "niche_026",
+    "name": "Motivational Content",
+    "description": "Inspirational scripts and quotes for social media."
+  },
+  {
+    "id": "niche_027",
+    "name": "Fitness Coaching",
+    "description": "Workout plans, diet advice, and client communication prompts."
+  },
+  {
+    "id": "niche_028",
+    "name": "Dating Profile Optimization",
+    "description": "Prompts for bios, messages, and attraction strategies."
+  },
+  {
+    "id": "niche_029",
+    "name": "Travel Content Creation",
+    "description": "Captions, itineraries, and storytelling prompts for travel creators."
+  },
+  {
+    "id": "niche_030",
+    "name": "Finance & Budgeting",
+    "description": "Prompts for saving, investing, and personal finance advice."
+  },
+  {
+    "id": "niche_031",
+    "name": "Crypto Content",
+    "description": "Educational and hype content prompts for cryptocurrency."
+  },
+  {
+    "id": "niche_032",
+    "name": "NFT Marketing",
+    "description": "Prompts for promoting NFT collections and communities."
+  },
+  {
+    "id": "niche_033",
+    "name": "Gaming Content",
+    "description": "Streaming scripts, commentary, and viral gaming ideas."
+  },
+  {
+    "id": "niche_034",
+    "name": "Tech Reviews",
+    "description": "Structured prompts for reviewing gadgets and software."
+  },
+  {
+    "id": "niche_035",
+    "name": "Beauty & Skincare",
+    "description": "Product reviews, routines, and influencer content prompts."
+  },
+  {
+    "id": "niche_036",
+    "name": "Food & Recipes",
+    "description": "Recipe generation and food blogging prompts."
+  },
+  {
+    "id": "niche_037",
+    "name": "Parenting Advice",
+    "description": "Tips and storytelling prompts for parenting content."
+  },
+  {
+    "id": "niche_038",
+    "name": "Educational Content",
+    "description": "Lesson plans and teaching prompts for educators."
+  },
+  {
+    "id": "niche_039",
+    "name": "Language Learning",
+    "description": "Prompts for practicing and teaching new languages."
+  },
+  {
+    "id": "niche_040",
+    "name": "Mindfulness & Meditation",
+    "description": "Guided meditation and wellness prompts."
+  },
+  {
+    "id": "niche_041",
+    "name": "Story Writing",
+    "description": "Creative storytelling prompts for fiction writers."
+  },
+  {
+    "id": "niche_042",
+    "name": "Scriptwriting for Films",
+    "description": "Prompts for writing movie and short film scripts."
+  },
+  {
+    "id": "niche_043",
+    "name": "AI Business Ideas",
+    "description": "Prompts to generate startup and side hustle ideas."
+  },
+  {
+    "id": "niche_044",
+    "name": "Side Hustle Planning",
+    "description": "Step-by-step prompts for launching extra income streams."
+  },
+  {
+    "id": "niche_045",
+    "name": "Marketing Funnels",
+    "description": "Prompts for building and optimizing sales funnels."
+  },
+  {
+    "id": "niche_046",
+    "name": "Brand Naming",
+    "description": "Creative prompts for business and product names."
+  },
+  {
+    "id": "niche_047",
+    "name": "Logo Design Ideas",
+    "description": "Prompts for generating logo concepts and branding."
+  },
+  {
+    "id": "niche_048",
+    "name": "App Development Ideas",
+    "description": "Prompts to brainstorm mobile and web app concepts."
+  },
+  {
+    "id": "niche_049",
+    "name": "Content Repurposing",
+    "description": "Prompts to turn one piece of content into multiple formats."
+  },
+  {
+    "id": "niche_050",
+    "name": "Viral Hook Generator",
+    "description": "High-impact hooks and opening lines for any content platform."
   }
 ]
