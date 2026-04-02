@@ -6,7 +6,6 @@
     <title>PromptVault USA | Global AI Intelligence</title>
     
     <link rel="icon" type="image/png" href="logo.png">
-    <meta name="p:domain_verify" content="d052050534f657b1bdfe18653599cb3d"/>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <style>
@@ -26,7 +25,7 @@
         .header-nav { display: flex; align-items: center; gap: 15px; }
         .header-nav a { color: #94a3b8; text-decoration: none; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* RESTORED LOGO SIZE */
+        /* LOGO SIZE RESTORED */
         .logo-box { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); object-fit: cover; }
         
         .signin-pill { background: white; color: black; padding: 8px 16px; border-radius: 20px; font-weight: 800; font-size: 0.75rem; border: none; cursor: pointer; }
@@ -51,8 +50,11 @@
         .proof-section { margin: 40px 0 20px; text-align: left; }
         .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
         .proof-item { aspect-ratio: 9/16; background: #1e293b; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
-        .proof-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+        
+        /* Ensuring images fill the container */
+        .proof-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; display: block; }
         .proof-item:hover img { transform: scale(1.05); }
+        
         .proof-label { position: absolute; bottom: 8px; left: 8px; font-size: 0.55rem; background: rgba(0,0,0,0.7); padding: 3px 8px; border-radius: 4px; backdrop-filter: blur(4px); font-weight: 700; color: white; border: 1px solid rgba(255,255,255,0.1); }
 
         .btn-main { background: white; color: black; width: 100%; padding: 18px; border-radius: 40px; font-weight: 800; font-size: 1rem; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
@@ -66,9 +68,6 @@
         .nav-item.active { color: var(--secondary); }
 
         footer { padding: 40px 20px; text-align: center; color: #475569; font-size: 0.7rem; border-top: 1px solid var(--border); margin-top: 20px; }
-        .footer-links { margin-bottom: 10px; display: flex; justify-content: center; gap: 15px; }
-        .footer-links a { color: #64748b; text-decoration: none; }
-
         .page { display: none; }
         .page.active { display: block; animation: fadeIn 0.6s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -90,7 +89,6 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
-        provider.setCustomParameters({ prompt: 'select_account' });
 
         window.auth = auth;
 
@@ -183,11 +181,11 @@
                 <h4 style="margin: 0; font-size: 0.8rem; letter-spacing: 1px; color: var(--secondary); text-transform: uppercase;">The Vault Preview</h4>
                 <div class="proof-grid">
                     <div class="proof-item">
-                        <img src="1000098629.jpg" alt="Cinematic AI Render">
+                        <img src="https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&w=600&q=80" alt="Cinematic Preview">
                         <span class="proof-label">9:16 CINEMATIC</span>
                     </div>
                     <div class="proof-item">
-                        <img src="1000098630.jpg" alt="Hyper-Realism AI Asset">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80" alt="Hyper-Realism Preview">
                         <span class="proof-label">HYPER-REALISM</span>
                     </div>
                 </div>
@@ -234,11 +232,6 @@
 </div>
 
 <footer>
-    <div class="footer-links">
-        <a href="#">Terms</a>
-        <a href="#">Privacy</a>
-        <a href="#">Support</a>
-    </div>
     <p>© 2026 PromptVault USA. Built for Global Entrepreneurs.</p>
 </footer>
 
