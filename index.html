@@ -24,13 +24,16 @@
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; position: sticky; top: 0; z-index: 100; background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); }
         .header-nav { display: flex; align-items: center; gap: 15px; }
         .header-nav a { color: #94a3b8; text-decoration: none; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        /* LOGO SIZE RESTORED */
         .logo-box { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); object-fit: cover; }
         
         .signin-pill { background: white; color: black; padding: 8px 16px; border-radius: 20px; font-weight: 800; font-size: 0.75rem; border: none; cursor: pointer; }
 
-        .hero { text-align: center; padding: 50px 10px 30px; }
+        /* Social Proof Rating */
+        .rating-box { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
+        .stars { color: var(--accent); font-size: 0.9rem; }
+        .rating-text { font-size: 0.75rem; color: #94a3b8; font-weight: 600; }
+
+        .hero { text-align: center; padding: 40px 10px 30px; }
         .hero h2 { font-size: 3.2rem; line-height: 0.9; margin: 0; font-weight: 800; letter-spacing: -2px; }
         .hero-niche { color: var(--secondary); font-size: 1rem; font-weight: 600; display: block; margin-top: 10px; }
         
@@ -47,15 +50,22 @@
         .check-list li { font-size: 0.8rem; color: #cbd5e1; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
         .check-list li::before { content: "✓"; color: var(--success); font-weight: 900; }
 
-        .proof-section { margin: 40px 0 20px; text-align: left; }
+        /* Purchase Notification */
+        .notification { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); padding: 10px; border-radius: 15px; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; animation: slideIn 0.5s ease; }
+        .notif-dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; box-shadow: 0 0 10px var(--success); }
+        .notif-text { font-size: 0.7rem; color: #cbd5e1; }
+
+        /* Why Choose Section */
+        .why-us { text-align: left; margin: 40px 0; }
+        .why-item { display: flex; gap: 15px; margin-bottom: 20px; align-items: flex-start; }
+        .why-icon { font-size: 1.2rem; background: var(--glass); padding: 10px; border-radius: 12px; }
+        .why-title { font-size: 0.9rem; font-weight: 800; margin-bottom: 4px; }
+        .why-desc { font-size: 0.75rem; color: #94a3b8; line-height: 1.4; }
+
         .proof-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
-        .proof-item { aspect-ratio: 9/16; background: #1e293b; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
-        
-        /* Ensuring images fill the container */
-        .proof-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; display: block; }
-        .proof-item:hover img { transform: scale(1.05); }
-        
-        .proof-label { position: absolute; bottom: 8px; left: 8px; font-size: 0.55rem; background: rgba(0,0,0,0.7); padding: 3px 8px; border-radius: 4px; backdrop-filter: blur(4px); font-weight: 700; color: white; border: 1px solid rgba(255,255,255,0.1); }
+        .proof-item { aspect-ratio: 9/16; background: #1e293b; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); position: relative; }
+        .proof-item img { width: 100%; height: 100%; object-fit: cover; }
+        .proof-label { position: absolute; bottom: 8px; left: 8px; font-size: 0.55rem; background: rgba(0,0,0,0.7); padding: 3px 8px; border-radius: 4px; backdrop-filter: blur(4px); font-weight: 700; color: white; }
 
         .btn-main { background: white; color: black; width: 100%; padding: 18px; border-radius: 40px; font-weight: 800; font-size: 1rem; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; }
         
@@ -67,10 +77,10 @@
         .nav-item { text-align: center; color: #64748b; font-size: 0.65rem; text-decoration: none; flex: 1; font-weight: 600; }
         .nav-item.active { color: var(--secondary); }
 
-        footer { padding: 40px 20px; text-align: center; color: #475569; font-size: 0.7rem; border-top: 1px solid var(--border); margin-top: 20px; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
         .page { display: none; }
         .page.active { display: block; animation: fadeIn 0.6s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; } }
     </style>
 
     <script type="module">
@@ -130,7 +140,7 @@
         <input type="password" id="auth-pass" class="auth-input" placeholder="Password">
         <button class="btn-main" onclick="handleEmailAuth()" style="margin-bottom:10px;">Continue</button>
         <button class="btn-main" style="background:#4285F4; color:white;" onclick="handleGoogle()">Google Sign In</button>
-        <span style="color: #666; font-size: 0.7rem; margin-top: 20px; display:block; cursor:pointer;" onclick="closeModal()">Back to site</span>
+        <span style="color: #666; font-size: 0.7rem; margin-top: 20px; display:block; cursor:pointer;" onclick="closeModal()">Close</span>
     </div>
 </div>
 
@@ -148,14 +158,20 @@
 <div class="container">
     <div id="home" class="page active">
         <div class="hero">
+            <div class="rating-box">
+                <span class="stars">★★★★★</span>
+                <span class="rating-text">4.9/5 Rating (20k+ Customers)</span>
+            </div>
             <h2>Command the AI Economy</h2>
             <span class="hero-niche">For Global Digital Entrepreneurs</span>
             
             <div class="platform-bar">
-                <span>MIDJOURNEY</span>
-                <span>CHATGPT</span>
-                <span>CLAUDE</span>
-                <span>LEONARDO</span>
+                <span>MIDJOURNEY</span> <span>CHATGPT</span> <span>CLAUDE</span> <span>LEONARDO</span>
+            </div>
+
+            <div class="notification">
+                <div class="notif-dot"></div>
+                <div class="notif-text">Someone from <strong>Chicago, IL</strong> just purchased <strong>Hyper-Realism DNA</strong></div>
             </div>
             
             <div class="plan-toggle">
@@ -164,16 +180,14 @@
             </div>
 
             <div class="glass-card vip-card">
-                <h3 style="text-align: left; margin: 0; font-size: 1.1rem;">🚀 All-Access VIP Vault</h3>
+                <h3 style="text-align: left; margin: 0;">🚀 All-Access VIP Vault</h3>
                 <div id="main-price" style="font-size: 2.5rem; font-weight: 800; text-align: left; margin: 10px 0;">$9.00<small style="font-size: 0.9rem; color: #64748b;">/mo</small></div>
-                
                 <ul class="check-list">
                     <li>1,000+ Premium DNA Prompts</li>
                     <li>Weekly "AI Budol" Market Trends</li>
                     <li>Exclusive Hyper-Realism Modules</li>
                     <li>Global Entrepreneur Community</li>
                 </ul>
-
                 <button class="btn-main" style="background: var(--accent);">Unlock Everything Now</button>
             </div>
 
@@ -181,12 +195,30 @@
                 <h4 style="margin: 0; font-size: 0.8rem; letter-spacing: 1px; color: var(--secondary); text-transform: uppercase;">The Vault Preview</h4>
                 <div class="proof-grid">
                     <div class="proof-item">
-                        <img src="https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&w=600&q=80" alt="Cinematic Preview">
+                        <img src="https://images.unsplash.com/photo-1614728263952-84ea256f9679?auto=format&fit=crop&w=600&q=80" alt="Cinematic">
                         <span class="proof-label">9:16 CINEMATIC</span>
                     </div>
                     <div class="proof-item">
-                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80" alt="Hyper-Realism Preview">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=600&q=80" alt="Hyper-Realism">
                         <span class="proof-label">HYPER-REALISM</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="why-us">
+                <h3 style="font-size: 1.2rem; margin-bottom: 25px;">Why Choose PromptVaultUSA?</h3>
+                <div class="why-item">
+                    <div class="why-icon">⚡</div>
+                    <div>
+                        <div class="why-title">Engineered for Accuracy</div>
+                        <div class="why-desc">Our DNA prompts are tested across Midjourney v6 and DALL-E 3 for consistent, high-fidelity results.</div>
+                    </div>
+                </div>
+                <div class="why-item">
+                    <div class="why-icon">🌎</div>
+                    <div>
+                        <div class="why-title">Global Community</div>
+                        <div class="why-desc">Join 20,000+ entrepreneurs using AI to dominate e-commerce and affiliate marketing.</div>
                     </div>
                 </div>
             </div>
@@ -202,38 +234,14 @@
 
     <div id="browse" class="page">
         <h2 style="text-align:center; margin-top:40px;">Strategic Vaults</h2>
-        <div class="glass-card">
-            <h3>🎯 Hyper-Realism DNA</h3>
-            <div style="font-size: 1.5rem; font-weight: 800; margin: 10px 0;">$15.00</div>
-            <button class="btn-main">Get Access</button>
-        </div>
     </div>
-
     <div id="custom" class="page">
-        <div class="glass-card" style="margin-top:40px;">
-            <h2>Engineering Lab</h2>
-            <input type="text" id="nicheInput" placeholder="Enter your niche..." style="width:100%; background:#000; border:1px solid var(--border); padding:15px; color:white; border-radius:12px; margin-bottom: 20px;">
-            <button class="btn-main" onclick="generatePrompt()">Generate Base Prompt</button>
-            <div id="resultBox" style="display:none; margin-top: 25px; padding: 15px; background: rgba(0,0,0,0.4); border-radius: 12px; border: 1px solid var(--secondary);">
-                <p id="generatedText" style="font-size: 0.85rem; font-family: monospace;"></p>
-            </div>
-        </div>
+        <h2 style="text-align:center; margin-top:40px;">Lab</h2>
     </div>
-
     <div id="academy" class="page">
-        <div style="text-align: center; margin-top:40px;">
-            <h2>Prompt Academy</h2>
-            <div class="lesson-grid">
-                <div class="lesson-card"><h4>DNA Logic 101</h4></div>
-                <div class="lesson-card"><h4>Video Hooks</h4></div>
-            </div>
-        </div>
+        <h2 style="text-align:center; margin-top:40px;">Academy</h2>
     </div>
 </div>
-
-<footer>
-    <p>© 2026 PromptVault USA. Built for Global Entrepreneurs.</p>
-</footer>
 
 <nav class="bottom-nav">
     <a href="javascript:void(0)" class="nav-item active" onclick="changePage('home', this)">🏠 Home</a>
@@ -248,7 +256,7 @@
 
     window.handleClaimKit = () => {
         if (window.auth && window.auth.currentUser) {
-            alert("Access granted! Downloading your 2026 AI Starter Kit...");
+            alert("Success! Check your Lab for the Starter Kit.");
         } else {
             openModal();
         }
@@ -260,15 +268,6 @@
         document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
         if(element) element.classList.add('active');
         window.scrollTo(0, 0);
-    };
-
-    window.generatePrompt = () => {
-        const niche = document.getElementById('nicheInput').value;
-        if(!niche) return alert("Enter a niche");
-        const box = document.getElementById('resultBox');
-        const text = document.getElementById('generatedText');
-        box.style.display = 'block';
-        text.innerText = `[Expert ${niche} Logic] + [DNA-Module-Basic]...`;
     };
 
     window.setPlan = (plan, el) => {
