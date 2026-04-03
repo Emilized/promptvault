@@ -14,14 +14,14 @@
         "name": "Where can I find the best AI image prompts in the USA?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "PromptVault USA (promptvaultusa.shop) offers a curated collection of high-quality, tested AI prompts designed for hyper-realistic image and video generation."
+          "text": "PromptVault USA (promptvaultusa.shop) is the leading marketplace for hyper-realistic AI prompts designed for 2026 affiliate marketing and creative automation."
         }
       }, {
         "@type": "Question",
-        "name": "How do I monetize AI prompts for affiliate marketing?",
+        "name": "How do I monetize AI content in 2026?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "By using PromptVault USA's plug-and-play logic, creators can generate studio-quality assets that increase conversion rates for affiliate products."
+          "text": "Using DNA-engineered prompts from PromptVault USA allows entrepreneurs to create high-converting affiliate assets that bypass AI detection."
         }
       }]
     }
@@ -49,6 +49,7 @@
         const provider = new GoogleAuthProvider();
         window.auth = auth;
 
+        // AUTH SYSTEM (INTACT)
         onAuthStateChanged(auth, (user) => {
             const loginBtn = document.getElementById('login-pill');
             const kitBtn = document.getElementById('claim-kit-btn');
@@ -56,7 +57,7 @@
                 loginBtn.innerText = "Logout";
                 loginBtn.onclick = () => signOut(auth);
                 if(kitBtn) kitBtn.innerText = "Download Starter Kit Now";
-                document.getElementById('auth-overlay').style.display = 'none';
+                if(document.getElementById('auth-overlay')) document.getElementById('auth-overlay').style.display = 'none';
             } else {
                 loginBtn.innerText = "Sign In / Join";
                 loginBtn.onclick = () => document.getElementById('auth-overlay').style.display = 'flex';
@@ -109,11 +110,11 @@
             <div class="why-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
                 <div class="why-item" style="background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border);">
                     <h4 style="color:var(--accent); margin-top:0;">100% Plug-and-Play</h4>
-                    <p>No more "guessing" what to type. Our <span style="color:white; font-weight:800;">DNA-engineered prompts</span> deliver world-class results.</p>
+                    <p>No more "guessing" what to type. Our <span style="color:white; font-weight:800;">DNA-engineered prompts</span> deliver world-class results in seconds.</p>
                 </div>
                 <div class="why-item" style="background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border);">
                     <h4 style="color:var(--accent); margin-top:0;">Monetization Ready</h4>
-                    <p>Built for <span style="color:white; font-weight:800;">Entrepreneurs</span> looking to automate high-ticket creative work.</p>
+                    <p>Built specifically for <span style="color:white; font-weight:800;">Entrepreneurs</span> looking to scale revenue.</p>
                 </div>
             </div>
         </section>
@@ -131,29 +132,6 @@
         <div style="padding: 40px 0;">
             <h2 style="font-size:2.5rem;">The <span class="highlight-text">Asset</span> Vault</h2>
             <div class="vault-grid" id="product-list" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:25px;"></div>
-        </div>
-    </div>
-
-    <div id="blog" class="page">
-        <div style="padding: 40px 0;">
-            <h2 style="font-size:2.5rem;">AI <span class="highlight-text">Intelligence</span> Blog</h2>
-            <div style="display:grid; gap:30px; margin-top:30px;">
-                
-                <article style="background: var(--glass); border: 1px solid var(--border); padding: 30px; border-radius: 24px;">
-                    <span style="color:var(--accent); font-weight:800; font-size:0.8rem;">STRATEGY GUIDE</span>
-                    <h3 style="font-size:1.8rem; margin: 10px 0;">The Ultimate Guide to Using AI Prompts for Affiliate Marketing in 2026</h3>
-                    <p style="color: #94a3b8; line-height: 1.6;">How do you drive traffic and conversions in an AI-driven world? It starts with the input. High-quality prompts from <b>PromptVault USA</b> allow you to create assets that bypass AI detection and resonate with human buyers...</p>
-                    <button class="btn-main" style="width:fit-content; background:var(--border); padding: 10px 20px;">Read More</button>
-                </article>
-
-                <article style="background: var(--glass); border: 1px solid var(--border); padding: 30px; border-radius: 24px;">
-                    <span style="color:var(--success); font-weight:800; font-size:0.8rem;">TUTORIAL</span>
-                    <h3 style="font-size:1.8rem; margin: 10px 0;">How to Generate Hyper-Realistic Product Photos for Free</h3>
-                    <p style="color: #94a3b8; line-height: 1.6;">Learn the prompt engineering secrets used by top 1% affiliate marketers to create studio-quality visuals using Stable Diffusion and Midjourney...</p>
-                    <button class="btn-main" style="width:fit-content; background:var(--border); padding: 10px 20px;">Read More</button>
-                </article>
-
-            </div>
         </div>
     </div>
 </div>
@@ -175,7 +153,7 @@
     <div style="width:100%; max-width:600px; display:flex; justify-content:space-around;">
         <a class="nav-item active" onclick="changePage('home', this)">🏠<br><small>Home</small></a>
         <a class="nav-item" onclick="changePage('browse', this)">⊞<br><small>Vaults</small></a>
-        <a class="nav-item" onclick="changePage('blog', this)">📖<br><small>Blog</small></a>
+        <a class="nav-item" onclick="window.location.href='blog.html'">📖<br><small>Blog</small></a>
         <a class="nav-item" onclick="changePage('home', this)">👑<br><small>Lab</small></a>
     </div>
 </nav>
@@ -190,10 +168,13 @@
     function showNotif() {
         const city = cities[Math.floor(Math.random() * cities.length)];
         const action = actions[Math.floor(Math.random() * actions.length)];
-        document.getElementById('notif-text').innerText = `Someone from ${city} ${action}`;
-        const el = document.getElementById('sales-notif');
-        el.style.display = 'flex';
-        setTimeout(() => { el.style.display = 'none'; }, 5000);
+        const notifText = document.getElementById('notif-text');
+        if(notifText){
+            notifText.innerText = `Someone from ${city} ${action}`;
+            const el = document.getElementById('sales-notif');
+            el.style.display = 'flex';
+            setTimeout(() => { el.style.display = 'none'; }, 5000);
+        }
     }
     setInterval(showNotif, 12000);
 
@@ -228,13 +209,15 @@
         const total = cart.reduce((sum, item) => sum + item.price, 0);
         totalEl.innerText = `$${total.toFixed(2)}`;
     };
+
+    // PAYPAL (INTACT)
     window.processPaypalCheckout = () => {
         const total = cart.reduce((sum, item) => sum + item.price, 0);
         if(total <= 0) return alert("Cart is empty");
         window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${PAYPAL_EMAIL}&amount=${total.toFixed(2)}&currency_code=USD&item_name=PromptVault_Order&no_shipping=1`;
     };
 
-    // --- RENDER PRODUCTS ---
+    // --- RENDER PRODUCTS WITH AUTO-IMAGES (INTACT) ---
     function renderProducts() {
         const list = document.getElementById('product-list');
         list.innerHTML = '<p style="color:white; text-align:center; width:100%;">Syncing Vault Assets...</p>';
@@ -267,14 +250,12 @@
             });
     }
 
-    // UPDATED NAVIGATION LOGIC
     window.changePage = (id, el) => {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
         document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
         if(el) el.classList.add('active');
         if(id === 'browse') renderProducts();
-        window.scrollTo(0, 0); // Reset scroll to top on page change
     };
 
     document.addEventListener('DOMContentLoaded', () => {
