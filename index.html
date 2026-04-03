@@ -51,7 +51,7 @@
 
 <div class="spotlight"></div>
 
-<div id="sales-notif" style="position: fixed; bottom: 100px; left: 20px; background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border); padding: 12px 20px; border-radius: 50px; z-index: 9999; display: none; align-items: center; gap: 12px; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+<div id="sales-notif" style="position: fixed; bottom: 100px; left: 20px; background: rgba(15, 23, 42, 0.95); border: 1px solid var(--border); padding: 12px 20px; border-radius: 50px; z-index: 9999; display: none; align-items: center; gap: 12px; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
     <div style="width: 10px; height: 10px; background: var(--success); border-radius: 50%;"></div>
     <span id="notif-text" style="font-size: 0.85rem; font-weight: 600; color: white;"></span>
 </div>
@@ -85,7 +85,6 @@
 
         <section class="why-section" style="margin-top: 60px;">
             <h2 style="text-align:center; font-size:2.2rem; margin-bottom:10px;">Why <span class="highlight-text">PromptVaultUSA?</span></h2>
-            <p style="text-align:center; color:#94a3b8; margin-bottom:40px;">The gold standard for AI-driven entrepreneurship.</p>
             <div class="why-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
                 <div class="why-item" style="background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border);">
                     <h4 style="color:var(--accent); margin-top:0;">100% Plug-and-Play</h4>
@@ -93,11 +92,11 @@
                 </div>
                 <div class="why-item" style="background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border);">
                     <h4 style="color:var(--accent); margin-top:0;">Monetization Ready</h4>
-                    <p>Built specifically for <span style="color:white; font-weight:800;">Entrepreneurs</span> looking to scale revenue and automate creative work.</p>
+                    <p>Built specifically for <span style="color:white; font-weight:800;">Entrepreneurs</span> looking to scale revenue and automate high-ticket creative work.</p>
                 </div>
                 <div class="why-item" style="background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border);">
                     <h4 style="color:var(--accent); margin-top:0;">2026 Ready Logic</h4>
-                    <p>Updated <span style="color:white; font-weight:800;">every week</span> to ensure your content bypasses AI detection and looks hyper-realistic.</p>
+                    <p>We update the vault <span style="color:white; font-weight:800;">every week</span> to ensure your content bypasses AI detection and looks hyper-realistic.</p>
                 </div>
             </div>
         </section>
@@ -121,14 +120,14 @@
 
 <div id="checkout-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 6000; align-items: center; justify-content: center;">
     <div class="auth-card" style="width: 95%; max-width: 450px;">
-        <h3 style="margin-top:0; text-align:center;">Your Cart</h3>
+        <h3 style="margin-top:0; text-align:center;">Your Selection</h3>
         <div id="cart-items-list" style="max-height: 250px; overflow-y: auto; margin: 20px 0;"></div>
         <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.4rem; border-top:1px solid var(--border); padding-top:15px; margin-bottom:25px;">
             <span>Total:</span>
             <span id="cart-total" style="color:var(--secondary)">$0.00</span>
         </div>
-        <button onclick="processPaypalCheckout()" class="btn-main" style="background:var(--success); margin-bottom:15px;">Pay with PayPal</button>
-        <center><span style="color: #94a3b8; cursor:pointer;" onclick="document.getElementById('checkout-overlay').style.display = 'none'">Back to Vault</span></center>
+        <button onclick="processPaypalCheckout()" class="btn-main" style="background:var(--success); margin-bottom:15px;">Checkout (PayPal)</button>
+        <center><span style="color: #94a3b8; cursor:pointer;" onclick="document.getElementById('checkout-overlay').style.display = 'none'">Close Window</span></center>
     </div>
 </div>
 
@@ -145,10 +144,9 @@
     const PAYPAL_EMAIL = "emilyperong23@gmail.com";
     let cart = JSON.parse(localStorage.getItem('pv_cart')) || [];
 
-    // --- Step 3: Notification Logic ---
+    // --- NOTIFICATION LOGIC ---
     const cities = ["Chicago", "New York", "London", "Manila", "Sydney", "Dubai", "Los Angeles", "Berlin"];
     const actions = ["joined the vault", "added to cart", "purchased a pack", "unlocked the starter kit"];
-    
     function showNotif() {
         const city = cities[Math.floor(Math.random() * cities.length)];
         const action = actions[Math.floor(Math.random() * actions.length)];
@@ -163,22 +161,19 @@
     window.updateCartCount = () => {
         document.getElementById('cart-count-pill').innerText = cart.length;
     };
-
     window.addToCart = (productStr) => {
         const product = JSON.parse(decodeURIComponent(productStr));
         cart.push(product);
         localStorage.setItem('pv_cart', JSON.stringify(cart));
         updateCartCount();
-        alert(`${product.name} added!`);
+        alert(`${product.name} added to cart!`);
     };
-
     window.removeFromCart = (index) => {
         cart.splice(index, 1);
         localStorage.setItem('pv_cart', JSON.stringify(cart));
         updateCartCount();
         openCheckout();
     };
-
     window.openCheckout = () => {
         const modal = document.getElementById('checkout-overlay');
         const list = document.getElementById('cart-items-list');
@@ -193,36 +188,31 @@
         const total = cart.reduce((sum, item) => sum + item.price, 0);
         totalEl.innerText = `$${total.toFixed(2)}`;
     };
-
     window.processPaypalCheckout = () => {
         const total = cart.reduce((sum, item) => sum + item.price, 0);
         if(total <= 0) return alert("Cart is empty");
         window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${PAYPAL_EMAIL}&amount=${total.toFixed(2)}&currency_code=USD&item_name=PromptVault_Order&no_shipping=1`;
     };
 
-    // --- RENDER & NAVIGATION ---
-    window.changePage = (id, el) => {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-        if(el) el.classList.add('active');
-        if(id === 'browse') renderProducts();
-    };
-
+    // --- RENDER PRODUCTS WITH AUTO-IMAGES ---
     function renderProducts() {
         const list = document.getElementById('product-list');
+        list.innerHTML = '<p style="color:white; text-align:center; width:100%;">Syncing Vault Assets...</p>';
+        
         fetch('products.json')
             .then(res => res.json())
             .then(products => {
                 list.innerHTML = products.map(p => {
                     const pData = encodeURIComponent(JSON.stringify(p));
-                    // Fix: Ensure image path is correctly pulled from JSON 'img' or 'id'
-                    const displayImg = p.img || `img/${p.id}.jpg`; 
+                    
+                    // RESTORED AUTO-LOAD IMAGE LOGIC
+                    const displayImg = p.img || `https://picsum.photos/seed/${p.id}/400/400`;
+                    
                     const buyNowUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${PAYPAL_EMAIL}&amount=${p.price.toFixed(2)}&currency_code=USD&item_name=${encodeURIComponent(p.name)}&no_shipping=1`;
 
                     return `
                         <div style="background:var(--glass); border:1px solid var(--border); border-radius:24px; padding:20px; display:flex; flex-direction:column;">
-                            <div style="aspect-ratio:1/1; border-radius:15px; overflow:hidden; margin-bottom:15px; border:1px solid var(--border);">
+                            <div style="aspect-ratio:1/1; border-radius:15px; overflow:hidden; margin-bottom:15px; border:1px solid var(--border); background:#000;">
                                 <img src="${displayImg}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://via.placeholder.com/400?text=AI+Vault'">
                             </div>
                             <div style="font-weight:800; font-size:1.1rem; margin-bottom:5px;">${p.name}</div>
@@ -239,6 +229,14 @@
                 }).join('');
             });
     }
+
+    window.changePage = (id, el) => {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+        if(el) el.classList.add('active');
+        if(id === 'browse') renderProducts();
+    };
 
     document.addEventListener('DOMContentLoaded', () => {
         updateCartCount();
