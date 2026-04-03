@@ -38,6 +38,15 @@
         .img-box img { width: 100%; height: 100%; object-fit: cover; }
         .p-name { font-weight: 800; min-height: 2.8em; color: white; margin-bottom: 5px; }
         .highlight-gold { color: #fbbf24; font-weight: 800; }
+        
+        /* UPDATED CART BUTTON COLOR */
+        .btn-cart-vault {
+            background: #6366f1 !important; /* Indigo/Violet Pop */
+            color: white !important;
+            font-size: 0.8rem;
+            padding: 10px;
+        }
+
         .btn-explore {
             background: linear-gradient(90deg, #3b82f6, #8b5cf6);
             color: white !important; font-weight: 800; padding: 16px 40px;
@@ -53,6 +62,13 @@
             color: var(--success);
             font-weight: 600;
         }
+        .trust-link-small {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.75rem;
+            margin: 0 10px;
+        }
+        .trust-link-small:hover { color: white; }
     </style>
 
     <script type="module">
@@ -118,7 +134,6 @@
     <div id="home" class="page active" style="max-width: 1100px; margin: 0 auto;">
         <div class="hero" style="padding: 80px 20px; text-align: center;">
             <h1 style="font-size: clamp(2.5rem, 8vw, 4rem); line-height: 1.1; margin-bottom: 25px;">Command the <span class="highlight-text">AI Economy</span></h1>
-            
             <p style="color: white; font-size: 1.2rem; max-width: 850px; margin: 0 auto 20px; line-height: 1.6;">
                 <strong>PromptVaultUSA</strong> is your all-in-one marketplace for powerful, ready-to-use AI prompts designed to help you start, grow, and monetize online faster.
             </p>
@@ -140,14 +155,21 @@
         <div class="glass-card" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); margin: 40px 20px; border-radius: 30px; text-align:center; padding: 60px 20px; border: 1px solid var(--border);">
             <h3 style="color:var(--success); font-weight:800; letter-spacing: 2px; margin-bottom: 10px;">MAKE YOUR FIRST $100 USING AI</h3>
             <h2 style="margin: 0 0 25px 0; font-size: 2.2rem;">Get Instant Access Now</h2>
-            <button id="claim-kit-btn" class="btn-main" style="max-width:300px; background:var(--success); color:white; margin-inline:auto;" onclick="handleGoogle()">Claim Starter Kit</button>
+            <button id="claim-kit-btn" class="btn-main" style="max-width:300px; background:var(--success); color:white; margin-inline:auto; margin-bottom: 30px;" onclick="handleGoogle()">Claim Starter Kit</button>
+            
+            <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 5px;">
+                <a href="legal.html" class="trust-link-small">Privacy Policy</a>
+                <a href="legal.html" class="trust-link-small">Terms & Conditions</a>
+                <a href="legal.html" class="trust-link-small">Refund Policy</a>
+                <a href="legal.html" class="trust-link-small">FAQs</a>
+            </div>
         </div>
     </div>
 
     <div id="browse" class="page">
         <div style="padding: 40px 20px; max-width: 1200px; margin: 0 auto;">
             <h2 style="font-size: 2.5rem; margin-bottom: 20px;">The <span class="highlight-text">Asset</span> Vault</h2>
-            <input type="text" id="vault-search" placeholder="Search 500+ high-converting prompts (TikTok, SEO, Business)..." 
+            <input type="text" id="vault-search" placeholder="Search 500+ high-converting prompts..." 
                    style="width: 100%; padding: 20px 25px; border-radius: 50px; border: 1px solid var(--border); background: var(--glass); color: white; outline: none; margin-bottom: 30px; font-size: 1.1rem;">
             <div id="product-list" class="vault-grid"></div>
         </div>
@@ -222,7 +244,7 @@
                     <div style="color:var(--secondary); font-weight:800; font-size:1.3rem; margin-bottom:15px;">$${p.price.toFixed(2)}</div>
                     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:auto;">
                         <button onclick="handleBuyNow('${p.paylink}')" class="btn-main" style="background:var(--success); font-size:0.8rem;">Buy</button>
-                        <button onclick="addToCart('${pData}')" class="btn-main" style="background:var(--glass); font-size:0.8rem;">+Cart</button>
+                        <button onclick="addToCart('${pData}')" class="btn-main btn-cart-vault">+Cart</button>
                     </div>
                 </div>`;
             }).join('');
