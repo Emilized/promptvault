@@ -45,21 +45,16 @@
         window.handleGoogle = async () => {
             try { await signInWithPopup(auth, provider); } catch(e) { alert(e.message); }
         };
-
-        window.handleEmailAuth = async (type) => {
-            const email = document.getElementById('auth-email').value;
-            const pass = document.getElementById('auth-pass').value;
-            if(!email || !pass) return alert("Please enter email and password");
-            try {
-                if(type === 'login') await signInWithEmailAndPassword(auth, email, pass);
-                else await createUserWithEmailAndPassword(auth, email, pass);
-            } catch(e) { alert(e.message); }
-        };
     </script>
 </head>
 <body>
 
 <div class="spotlight"></div>
+
+<div id="sales-notif" style="position: fixed; bottom: 100px; left: 20px; background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border); padding: 12px 20px; border-radius: 50px; z-index: 9999; display: none; align-items: center; gap: 12px; backdrop-filter: blur(10px); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+    <div style="width: 10px; height: 10px; background: var(--success); border-radius: 50%;"></div>
+    <span id="notif-text" style="font-size: 0.85rem; font-weight: 600; color: white;"></span>
+</div>
 
 <header>
     <div class="header-wrap">
@@ -79,18 +74,36 @@
 <div class="container">
     <div id="home" class="page active">
         <div class="hero">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; background: rgba(255,255,255,0.05); width: fit-content; margin-inline: auto; padding: 8px 16px; border-radius: 100px;">
+                <span style="color: #fbbf24;">★★★★★</span>
+                <span style="font-size: 0.8rem; font-weight: 800; color: #94a3b8;">TRUSTED BY 20,000+ CUSTOMERS</span>
+            </div>
+
             <h2>Command the <span>AI Economy</span></h2>
             <span class="hero-subheadline">Unlock 500+ AI Prompts to <span style="color:var(--accent)">Start, Grow, and Monetize</span> Online.</span>
-            
-            <div class="glass-card" style="margin-top:40px; border-bottom:6px solid var(--accent)">
-                <h3 style="margin:0; color:var(--secondary)">🚀 VIP All-Access Vault</h3>
-                <div id="main-price" style="font-size: 3.5rem; font-weight: 800; margin: 15px 0;">$9.00<small style="font-size: 1rem; color: #94a3b8;">/mo</small></div>
-                <button class="btn-main" style="background: var(--accent);">Unlock Everything Now</button>
-            </div>
         </div>
 
-        <div class="glass-card" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); margin: 60px 0;">
-            <div style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+        <section class="why-section" style="margin-top: 60px;">
+            <h2 style="text-align:center; font-size:2.2rem; margin-bottom:10px;">Why <span class="highlight-text">PromptVaultUSA?</span></h2>
+            <p style="text-align:center; color:#94a3b8; margin-bottom:40px;">The gold standard for AI-driven entrepreneurship.</p>
+            <div class="why-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div class="why-item" style="background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border);">
+                    <h4 style="color:var(--accent); margin-top:0;">100% Plug-and-Play</h4>
+                    <p>No more "guessing" what to type. Our <span style="color:white; font-weight:800;">DNA-engineered prompts</span> deliver world-class results in seconds.</p>
+                </div>
+                <div class="why-item" style="background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border);">
+                    <h4 style="color:var(--accent); margin-top:0;">Monetization Ready</h4>
+                    <p>Built specifically for <span style="color:white; font-weight:800;">Entrepreneurs</span> looking to scale revenue and automate creative work.</p>
+                </div>
+                <div class="why-item" style="background: var(--glass); padding: 25px; border-radius: 20px; border: 1px solid var(--border);">
+                    <h4 style="color:var(--accent); margin-top:0;">2026 Ready Logic</h4>
+                    <p>Updated <span style="color:white; font-weight:800;">every week</span> to ensure your content bypasses AI detection and looks hyper-realistic.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="glass-card" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); margin: 60px 0; border-radius: 30px;">
+            <div style="display:flex; flex-direction:column; align-items:center; text-align:center; padding: 40px;">
                 <span style="color:var(--success); font-weight:800; font-size: 0.9rem; letter-spacing: 2px;">LIMITED TIME GIFT</span>
                 <h2 style="margin: 15px 0; font-size: 2rem;">Claim 2026 AI Starter Kit</h2>
                 <button id="claim-kit-btn" class="btn-main" style="max-width:400px; background:var(--success); color:white;" onclick="handleClaimKit()">Sign In to Claim Kit</button>
@@ -101,37 +114,21 @@
     <div id="browse" class="page">
         <div style="padding: 40px 0;">
             <h2 style="font-size:2.5rem;">The <span class="highlight-text">Asset</span> Vault</h2>
-            <p style="color:#94a3b8; margin-bottom:30px;">Select a specialized pack to scale your business instantly.</p>
-            <div class="vault-grid" id="product-list" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:25px;">
-                </div>
+            <div class="vault-grid" id="product-list" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:25px;"></div>
         </div>
     </div>
 </div>
 
 <div id="checkout-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 6000; align-items: center; justify-content: center;">
-    <div class="auth-card" style="width: 95%; max-width: 450px; border: 1px solid var(--accent);">
-        <h3 style="margin-top:0; text-align:center;">Your Vault Selection</h3>
-        <div id="cart-items-list" style="max-height: 250px; overflow-y: auto; margin: 20px 0; padding-right:5px;"></div>
+    <div class="auth-card" style="width: 95%; max-width: 450px;">
+        <h3 style="margin-top:0; text-align:center;">Your Cart</h3>
+        <div id="cart-items-list" style="max-height: 250px; overflow-y: auto; margin: 20px 0;"></div>
         <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.4rem; border-top:1px solid var(--border); padding-top:15px; margin-bottom:25px;">
             <span>Total:</span>
             <span id="cart-total" style="color:var(--secondary)">$0.00</span>
         </div>
-        <button onclick="processPaypalCheckout()" class="btn-main" style="background:var(--success); margin-bottom:15px; font-size:1.1rem;">Checkout via PayPal</button>
-        <center><span style="color: #94a3b8; cursor:pointer; font-size:0.9rem;" onclick="document.getElementById('checkout-overlay').style.display = 'none'">Continue Browsing</span></center>
-    </div>
-</div>
-
-<div id="auth-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 5000; align-items: center; justify-content: center;">
-    <div class="auth-card">
-        <h3 style="text-align:center;">Join the Vault</h3>
-        <button class="btn-main" style="background:#4285F4; color:white; margin-bottom:20px;" onclick="window.handleGoogle()">Continue with Google</button>
-        <div style="text-align:center; margin-bottom:20px; font-size:0.8rem; color:#64748b;">OR</div>
-        <input type="email" id="auth-email" class="auth-input" placeholder="Email">
-        <input type="password" id="auth-pass" class="auth-input" placeholder="Password">
-        <div style="display:flex; gap:10px;">
-            <button onclick="handleEmailAuth('login')" style="flex:1; background:var(--glass); color:white; padding:14px; border-radius:12px; cursor:pointer;">Login</button>
-            <button onclick="handleEmailAuth('signup')" style="flex:1; background:var(--primary); color:white; padding:14px; border-radius:12px; cursor:pointer;">Sign Up</button>
-        </div>
+        <button onclick="processPaypalCheckout()" class="btn-main" style="background:var(--success); margin-bottom:15px;">Pay with PayPal</button>
+        <center><span style="color: #94a3b8; cursor:pointer;" onclick="document.getElementById('checkout-overlay').style.display = 'none'">Back to Vault</span></center>
     </div>
 </div>
 
@@ -148,10 +145,23 @@
     const PAYPAL_EMAIL = "emilyperong23@gmail.com";
     let cart = JSON.parse(localStorage.getItem('pv_cart')) || [];
 
+    // --- Step 3: Notification Logic ---
+    const cities = ["Chicago", "New York", "London", "Manila", "Sydney", "Dubai", "Los Angeles", "Berlin"];
+    const actions = ["joined the vault", "added to cart", "purchased a pack", "unlocked the starter kit"];
+    
+    function showNotif() {
+        const city = cities[Math.floor(Math.random() * cities.length)];
+        const action = actions[Math.floor(Math.random() * actions.length)];
+        document.getElementById('notif-text').innerText = `Someone from ${city} ${action}`;
+        const el = document.getElementById('sales-notif');
+        el.style.display = 'flex';
+        setTimeout(() => { el.style.display = 'none'; }, 5000);
+    }
+    setInterval(showNotif, 12000);
+
     // --- CART LOGIC ---
     window.updateCartCount = () => {
-        const pill = document.getElementById('cart-count-pill');
-        if(pill) pill.innerText = cart.length;
+        document.getElementById('cart-count-pill').innerText = cart.length;
     };
 
     window.addToCart = (productStr) => {
@@ -159,7 +169,7 @@
         cart.push(product);
         localStorage.setItem('pv_cart', JSON.stringify(cart));
         updateCartCount();
-        alert(`${product.name} added to cart!`);
+        alert(`${product.name} added!`);
     };
 
     window.removeFromCart = (index) => {
@@ -174,41 +184,20 @@
         const list = document.getElementById('cart-items-list');
         const totalEl = document.getElementById('cart-total');
         modal.style.display = 'flex';
-        
-        if(cart.length === 0) {
-            list.innerHTML = '<p style="text-align:center; color:#64748b; padding:20px;">Your cart is empty.</p>';
-            totalEl.innerText = "$0.00";
-            return;
-        }
-
         list.innerHTML = cart.map((item, index) => `
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; background:var(--glass); padding:12px; border-radius:12px; border:1px solid var(--border);">
-                <span style="font-size:0.9rem;">${item.name}</span>
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <b style="color:var(--secondary)">$${item.price.toFixed(2)}</b>
-                    <button onclick="removeFromCart(${index})" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-weight:800;">✕</button>
-                </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:12px; background:var(--glass); padding:10px; border-radius:12px;">
+                <span style="font-size:0.8rem;">${item.name}</span>
+                <b>$${item.price.toFixed(2)} <button onclick="removeFromCart(${index})" style="color:red; background:none; border:none; margin-left:10px;">✕</button></b>
             </div>
         `).join('');
-
         const total = cart.reduce((sum, item) => sum + item.price, 0);
         totalEl.innerText = `$${total.toFixed(2)}`;
     };
 
     window.processPaypalCheckout = () => {
         const total = cart.reduce((sum, item) => sum + item.price, 0);
-        if(total <= 0) return alert("Please add items to your cart.");
-        
-        const params = new URLSearchParams({
-            cmd: "_xclick",
-            business: PAYPAL_EMAIL,
-            amount: total.toFixed(2),
-            currency_code: "USD",
-            item_name: "PromptVault USA Bundle Selection",
-            no_shipping: "1",
-            return: window.location.origin
-        });
-        window.location.href = `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
+        if(total <= 0) return alert("Cart is empty");
+        window.location.href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${PAYPAL_EMAIL}&amount=${total.toFixed(2)}&currency_code=USD&item_name=PromptVault_Order&no_shipping=1`;
     };
 
     // --- RENDER & NAVIGATION ---
@@ -222,38 +211,39 @@
 
     function renderProducts() {
         const list = document.getElementById('product-list');
-        list.innerHTML = '<p style="color:white; text-align:center; width:100%;">Accessing Secure Vaults...</p>';
-
         fetch('products.json')
             .then(res => res.json())
             .then(products => {
                 list.innerHTML = products.map(p => {
                     const pData = encodeURIComponent(JSON.stringify(p));
+                    // Fix: Ensure image path is correctly pulled from JSON 'img' or 'id'
+                    const displayImg = p.img || `img/${p.id}.jpg`; 
                     const buyNowUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${PAYPAL_EMAIL}&amount=${p.price.toFixed(2)}&currency_code=USD&item_name=${encodeURIComponent(p.name)}&no_shipping=1`;
 
                     return `
                         <div style="background:var(--glass); border:1px solid var(--border); border-radius:24px; padding:20px; display:flex; flex-direction:column;">
                             <div style="aspect-ratio:1/1; border-radius:15px; overflow:hidden; margin-bottom:15px; border:1px solid var(--border);">
-                                <img src="${p.img || 'https://via.placeholder.com/400'}" style="width:100%; height:100%; object-fit:cover;">
+                                <img src="${displayImg}" style="width:100%; height:100%; object-fit:cover;" onerror="this.src='https://via.placeholder.com/400?text=AI+Vault'">
                             </div>
                             <div style="font-weight:800; font-size:1.1rem; margin-bottom:5px;">${p.name}</div>
                             <div style="color:var(--secondary); font-weight:800; font-size:1.4rem; margin-bottom:15px;">$${p.price.toFixed(2)}</div>
-                            
-                            <div style="display:flex; flex-direction:column; gap:8px; margin-top:auto;">
+                            <div style="display:flex; flex-direction:column; gap:8px;">
                                 <a href="${buyNowUrl}" class="btn-main" style="background:var(--success); color:white; text-decoration:none; text-align:center; padding:12px;">Buy Now</a>
                                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                                    <button onclick="addToCart('${pData}')" class="btn-main" style="background:var(--accent); font-size:0.8rem;">+ Cart</button>
-                                    <a href="product.html?id=${p.id}" class="btn-main" style="background:var(--glass); text-decoration:none; text-align:center; font-size:0.8rem;">Details</a>
+                                    <button onclick="addToCart('${pData}')" class="btn-main" style="background:var(--accent); font-size:0.8rem; padding:10px;">+ Cart</button>
+                                    <a href="product.html?id=${p.id}" class="btn-main" style="background:var(--glass); text-decoration:none; text-align:center; font-size:0.8rem; padding:10px;">Details</a>
                                 </div>
                             </div>
                         </div>
                     `;
                 }).join('');
-            })
-            .catch(() => list.innerHTML = '<p style="color:red; text-align:center; width:100%;">Vault Link Error. Check products.json</p>');
+            });
     }
 
-    document.addEventListener('DOMContentLoaded', updateCartCount);
+    document.addEventListener('DOMContentLoaded', () => {
+        updateCartCount();
+        setTimeout(showNotif, 3000);
+    });
 </script>
 </body>
 </html>
