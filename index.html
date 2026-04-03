@@ -68,6 +68,9 @@
             <span style="font-weight:800; letter-spacing:-1px;">PROMPTVAULT<span style="color:var(--secondary)">USA</span></span>
         </div>
         <div style="display: flex; gap: 15px; align-items: center;">
+            <button class="signin-pill" onclick="openCheckout()" style="background:var(--glass); position:relative; padding: 10px 15px;">
+                🛒 <span id="cart-count-pill" style="background:var(--accent); color:white; border-radius:50%; padding:2px 6px; font-size:10px; position:absolute; top:-5px; right:-5px;">0</span>
+            </button>
             <button class="signin-pill" id="login-pill">Sign In</button>
         </div>
     </div>
@@ -143,22 +146,31 @@
     <div class="auth-card">
         <h3 style="margin-top:0; font-size:1.8rem; text-align:center;">Join the Vault</h3>
         <p style="text-align:center; color:#94a3b8; font-size:0.9rem; margin-bottom:25px;">Sign up to access free and premium resources.</p>
-        
         <button class="btn-main" style="background:#4285F4; color:white; margin-bottom:20px; font-size:0.9rem; display:flex; align-items:center; justify-content:center; gap:10px;" onclick="window.handleGoogle()">
             Continue with Google
         </button>
-        
         <div style="text-align:center; margin-bottom:20px; font-size:0.8rem; color:#64748b; font-weight:800;">OR</div>
-        
         <input type="email" id="auth-email" class="auth-input" placeholder="Email Address">
         <input type="password" id="auth-pass" class="auth-input" placeholder="Password">
-        
         <div style="display:flex; gap:10px;">
             <button onclick="handleEmailAuth('login')" style="flex:1; background:var(--glass); color:white; border:1px solid var(--border); padding:14px; border-radius:12px; font-weight:800; cursor:pointer;">Login</button>
             <button onclick="handleEmailAuth('signup')" style="flex:1; background:var(--primary); color:white; border:none; padding:14px; border-radius:12px; font-weight:800; cursor:pointer;">Sign Up</button>
         </div>
-        
         <center><span style="color: #94a3b8; font-size: 0.8rem; margin-top: 25px; display:block; cursor:pointer;" onclick="document.getElementById('auth-overlay').style.display = 'none'">Close Window</span></center>
+    </div>
+</div>
+
+<div id="checkout-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 6000; align-items: center; justify-content: center;">
+    <div class="auth-card" style="width: 90%; max-width: 450px;">
+        <h3 style="margin-top:0; text-align:center;">Your Selection</h3>
+        <div id="cart-items-list" style="max-height: 250px; overflow-y: auto; margin: 20px 0; padding-right:10px;">
+            </div>
+        <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.3rem; margin-bottom:25px; border-top:1px solid var(--border); padding-top:15px;">
+            <span>Total:</span>
+            <span id="cart-total" style="color:var(--secondary)">$0.00</span>
+        </div>
+        <button onclick="processPaypalCheckout()" class="btn-main" style="background:var(--success); margin-bottom:15px;">Secure Checkout</button>
+        <center><span style="color: #94a3b8; cursor:pointer; font-size:0.9rem;" onclick="document.getElementById('checkout-overlay').style.display = 'none'">Add More Packs</span></center>
     </div>
 </div>
 
@@ -172,6 +184,66 @@
 </nav>
 
 <script>
+    // --- CART LOGIC ---
+    let cart = JSON.parse(localStorage.getItem('pv_cart')) || [];
+
+    window.updateCartCount = () => {
+        const pill = document.getElementById('cart-count-pill');
+        if(pill) pill.innerText = cart.length;
+    };
+
+    window.addToCart = (productStr) => {
+        const product = JSON.parse(decodeURIComponent(productStr));
+        cart.push(product);
+        localStorage.setItem('pv_cart', JSON.stringify(cart));
+        updateCartCount();
+        alert(`${product.name} added to cart!`);
+    };
+
+    window.openCheckout = () => {
+        const modal = document.getElementById('checkout-overlay');
+        const list = document.getElementById('cart-items-list');
+        const totalEl = document.getElementById('cart-total');
+        
+        modal.style.display = 'flex';
+        if(cart.length === 0) {
+            list.innerHTML = '<p style="text-align:center; color:#64748b;">Your cart is empty.</p>';
+            totalEl.innerText = "$0.00";
+            return;
+        }
+
+        list.innerHTML = cart.map((item, index) => `
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; background:var(--glass); padding:10px; border-radius:12px; border:1px solid var(--border);">
+                <div style="font-size:0.9rem; font-weight:600;">${item.name}</div>
+                <div style="display:flex; gap:12px; align-items:center;">
+                    <b style="color:var(--secondary)">$${item.price.toFixed(2)}</b>
+                    <button onclick="removeFromCart(${index})" style="background:none; border:none; color:#ff4d4d; cursor:pointer; font-size:1.1rem;">✕</button>
+                </div>
+            </div>
+        `).join('');
+
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        totalEl.innerText = `$${total.toFixed(2)}`;
+    };
+
+    window.removeFromCart = (index) => {
+        cart.splice(index, 1);
+        localStorage.setItem('pv_cart', JSON.stringify(cart));
+        updateCartCount();
+        openCheckout();
+    };
+
+    window.processPaypalCheckout = () => {
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        if(total <= 0) return alert("Please add items to your cart first.");
+        
+        // PayPal link for your unified checkout
+        const paypalEmail = "YOUR_PAYPAL_EMAIL@HERE.COM";
+        const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${paypalEmail}&amount=${total.toFixed(2)}&currency_code=USD&item_name=PromptVaultUSA_Bundle`;
+        window.location.href = url;
+    };
+
+    // --- NAVIGATION & RENDER ---
     window.changePage = (id, el) => {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById(id).classList.add('active');
@@ -189,7 +261,6 @@
         }
     };
 
-    // THE AUTOMATION SCRIPT (OPTION 2: DYNAMIC IMAGES)
     function renderProducts() {
         const list = document.getElementById('product-list');
         list.innerHTML = '<p style="color:white; text-align:center; width:100%;">Loading Vaults...</p>';
@@ -198,8 +269,9 @@
             .then(res => res.json())
             .then(products => {
                 list.innerHTML = products.map(p => {
-                    // Logic: Use JSON image if provided, otherwise generate a unique placeholder
                     const displayImg = p.img || `https://picsum.photos/seed/${p.id}/400/400`;
+                    // Encode product for safe passing to onclick
+                    const pData = encodeURIComponent(JSON.stringify(p));
 
                     return `
                         <div style="background:var(--glass); border:1px solid var(--border); border-radius:24px; padding:20px; display:flex; flex-direction:column;">
@@ -211,15 +283,22 @@
                             </div>
                             <div style="font-weight:800; font-size:1.1rem; margin-bottom:5px; height:2.6rem; overflow:hidden;">${p.name}</div>
                             <div style="color:var(--secondary); font-weight:800; font-size:1.3rem; margin-bottom:15px;">$${p.price.toFixed(2)}</div>
-                            <a href="product.html?id=${p.id}" class="btn-main" style="padding:12px; font-size:0.95rem; text-decoration:none; margin-top:auto;">View Details</a>
+                            
+                            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:auto;">
+                                <a href="product.html?id=${p.id}" class="btn-main" style="padding:12px; font-size:0.85rem; text-decoration:none; background:var(--glass);">Details</a>
+                                <button onclick="addToCart('${pData}')" class="btn-main" style="padding:12px; font-size:0.85rem;">+ Cart</button>
+                            </div>
                         </div>
                     `;
                 }).join('');
             })
             .catch(err => {
-                list.innerHTML = '<p style="color:red; text-align:center; width:100%;">Error loading products. Check products.json</p>';
+                list.innerHTML = '<p style="color:red; text-align:center; width:100%;">Error loading products.</p>';
             });
     }
+
+    // Initialize UI
+    document.addEventListener('DOMContentLoaded', updateCartCount);
 </script>
 
 </body>
