@@ -148,14 +148,6 @@
     </div>
 </div>
 
-<div id="auth-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); z-index: 7000; align-items: center; justify-content: center;">
-    <div class="auth-card" style="text-align: center; max-width: 400px; width: 90%;">
-        <h2 style="margin-bottom: 20px;">Join the Intelligence Network</h2>
-        <button onclick="handleGoogle()" class="btn-main" style="background: white; color: black; font-weight: bold;">Continue with Google</button>
-        <p style="margin-top: 20px; font-size: 0.8rem; color: #94a3b8; cursor: pointer;" onclick="document.getElementById('auth-overlay').style.display='none'">Go Back</p>
-    </div>
-</div>
-
 <nav class="bottom-nav">
     <div style="width:100%; max-width:600px; display:flex; justify-content:space-around;">
         <a class="nav-item active" onclick="changePage('home', this)">🏠<br><small>Home</small></a>
@@ -178,6 +170,7 @@
         document.getElementById('auth-overlay').style.display = 'flex';
     };
 
+    // Notifications
     const cities = ["Chicago", "New York", "London", "Manila", "Sydney", "Dubai", "Los Angeles", "Berlin"];
     const actions = ["joined the vault", "added to cart", "purchased a pack", "unlocked the starter kit"];
     function showNotif() {
@@ -195,6 +188,16 @@
 
     window.updateCartCount = () => {
         document.getElementById('cart-count-pill').innerText = cart.length;
+    };
+
+    // FIXED: Buy Now logic combined with Auth Check
+    window.buyNow = (productStr) => {
+        if (!isUserLoggedIn()) { requireLogin(); return; }
+        const product = JSON.parse(decodeURIComponent(productStr));
+        cart.push(product);
+        localStorage.setItem('pv_cart', JSON.stringify(cart));
+        updateCartCount();
+        openCheckout(); // Opens checkout modal immediately
     };
 
     window.addToCart = (productStr) => {
@@ -246,6 +249,7 @@
                 list.innerHTML = products.map(p => {
                     const pData = encodeURIComponent(JSON.stringify(p));
                     const displayImg = p.img || `https://picsum.photos/seed/${p.id}/400/400`;
+                    
                     return `
                         <div style="background:var(--glass); border:1px solid var(--border); border-radius:24px; padding:20px; display:flex; flex-direction:column;">
                             <div style="aspect-ratio:1/1; border-radius:15px; overflow:hidden; margin-bottom:15px; border:1px solid var(--border); background:#000;">
@@ -254,7 +258,7 @@
                             <div style="font-weight:800; font-size:1.1rem; margin-bottom:5px;">${p.name}</div>
                             <div style="color:var(--secondary); font-weight:800; font-size:1.4rem; margin-bottom:15px;">$${p.price.toFixed(2)}</div>
                             <div style="display:flex; flex-direction:column; gap:8px;">
-                                <button onclick="addToCart('${pData}')" class="btn-main" style="background:var(--success); color:white;">Buy Now</button>
+                                <button onclick="buyNow('${pData}')" class="btn-main" style="background:var(--success); color:white;">Buy Now</button>
                                 <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
                                     <button onclick="addToCart('${pData}')" class="btn-main" style="background:var(--accent); font-size:0.8rem; padding:10px;">+ Cart</button>
                                     <a href="product.html?id=${p.id}" class="btn-main" style="background:var(--glass); text-decoration:none; text-align:center; font-size:0.8rem; padding:10px;">Details</a>
@@ -277,14 +281,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         updateCartCount();
         setTimeout(showNotif, 3000);
-
-        // --- DEEP LINKING LOGIC FOR BLOG REDIRECT ---
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('page') === 'browse') {
-            // Find the nav item for "browse" (the second one) to keep the UI highlighting correct
-            const browseNav = document.querySelectorAll('.nav-item')[1];
-            changePage('browse', browseNav);
-        }
     });
 </script>
 </body>
