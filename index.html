@@ -47,7 +47,7 @@
             <span style="font-weight:800; letter-spacing:-1px;">PROMPTVAULT<span style="color:var(--secondary)">USA</span></span>
         </div>
         <div style="display: flex; gap: 15px; align-items: center;">
-            <button class="signin-pill" onclick="openCheckout()" style="background:var(--glass); position:relative; padding: 10px 15px; border:1px solid var(--border);">
+            <button class="signin-pill" onclick="UI.modal('checkout-overlay', 'open')" style="background:var(--glass); position:relative; padding: 10px 15px; border:1px solid var(--border);">
                 🛒 <span id="cart-count-pill" style="background:var(--accent); color:white; border-radius:50%; padding:2px 6px; font-size:10px; position:absolute; top:-5px; right:-5px; font-weight:800;">0</span>
             </button>
             <button class="signin-pill" id="login-pill">Sign In</button>
@@ -95,6 +95,16 @@
             <div class="vault-grid" id="product-list" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:25px;"></div>
         </div>
     </div>
+
+    <footer style="margin-top: 80px; padding: 60px 20px; border-top: 1px solid var(--border); text-align: center;">
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-bottom: 25px; font-size: 0.85rem; font-weight: 600;">
+            <a href="legal.html" style="color: var(--text-gray); text-decoration: none;">Privacy Policy</a>
+            <a href="legal.html" style="color: var(--text-gray); text-decoration: none;">Terms of Service</a>
+            <a href="legal.html" style="color: var(--text-gray); text-decoration: none;">Refund Policy</a>
+            <a href="legal.html" style="color: var(--text-gray); text-decoration: none;">Contact Support</a>
+        </div>
+        <p style="color: #64748b; font-size: 0.75rem;">&copy; 2026 PROMPTVAULT USA. Empowering the AI Economy.</p>
+    </footer>
 </div>
 
 <div id="auth-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); z-index: 7000; align-items: center; justify-content: center; padding: 20px;">
