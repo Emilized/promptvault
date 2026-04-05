@@ -1,13 +1,13 @@
 /**
- * PROMPTVAULT USA - CORE ENGINE v1.7 (Integrated)
- * Handles: Auth Guards, Search, Cart, and PayPal.
+ * PROMPTVAULT USA - CORE ENGINE v1.8 (Direct Purchase & Card Support)
+ * Handles: Auth Guards, Search, Cart, Direct Buy, and Card Payments.
  */
 
 const PAYPAL_EMAIL = "emilyperong23@gmail.com";
 let cart = JSON.parse(localStorage.getItem('pv_cart')) || [];
 let allProducts = [];
 
-// --- 1. AUTH HELPERS (Reused from Phase 2) ---
+// --- 1. AUTH HELPERS ---
 const isUserLoggedIn = () => !!window.auth?.currentUser;
 
 const requireLogin = () => {
@@ -38,9 +38,14 @@ window.renderProducts = (productsToDisplay) => {
                 </div>
                 <div style="font-weight:800; font-size:1.1rem; margin-bottom:5px; color:white;">${p.name}</div>
                 <div style="color:var(--secondary); font-weight:800; font-size:1.4rem; margin-bottom:15px;">$${p.price.toFixed(2)}</div>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:auto;">
-                    <button onclick="addToCart('${pData}')" class="btn-main" style="background:var(--accent); font-size:0.8rem; padding:12px; border-radius:12px;">+ Cart</button>
-                    <a href="product.html?id=${p.id}" class="btn-main" style="background:var(--glass); text-decoration:none; text-align:center; font-size:0.8rem; padding:12px; border-radius:12px; color:white; border:1px solid var(--border);">Details</a>
+                
+                <div style="display:flex; flex-direction:column; gap:8px; margin-top:auto;">
+                    <button onclick="processDirectPurchase('${pData}')" class="btn-main" style="background:var(--success); color:white; font-weight:800; border:none; padding:12px; border-radius:12px; cursor:pointer;">Buy Now (Card/PayPal)</button>
+                    
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                        <button onclick="addToCart('${pData}')" class="btn-main" style="background:var(--accent); font-size:0.8rem; padding:10px; border-radius:12px;">+ Cart</button>
+                        <a href="product.html?id=${p.id}" class="btn-main" style="background:var(--glass); text-decoration:none; text-align:center; font-size:0.8rem; padding:10px; border-radius:12px; color:white; border:1px solid var(--border);">Details</a>
+                    </div>
                 </div>
             </div>
         `;
@@ -70,7 +75,6 @@ window.addToCart = (productStr) => {
     localStorage.setItem('pv_cart', JSON.stringify(cart));
     window.updateCartCount();
     
-    // Social Proof UI Feedback
     const notif = document.getElementById('sales-notif');
     const notifText = document.getElementById('notif-text');
     if (notif && notifText) {
@@ -84,22 +88,64 @@ window.removeFromCart = (index) => {
     cart.splice(index, 1);
     localStorage.setItem('pv_cart', JSON.stringify(cart));
     window.updateCartCount();
-    window.openCheckout(); // Refresh UI
+    window.openCheckout();
 };
 
 // --- 4. CHECKOUT & PAYPAL ---
 
+/**
+ * Redirects for Single Item "Buy Now"
+ * Supports Credit/Debit Card via 'solutiontype=sole'
+ */
+window.processDirectPurchase = (productStr) => {
+    if (!isUserLoggedIn()) return requireLogin();
+    const product = JSON.parse(decodeURIComponent(productStr));
+    
+    const params = new URLSearchParams({
+        cmd: "_xclick",
+        business: PAYPAL_EMAIL,
+        currency_code: "USD",
+        amount: product.price.toFixed(2),
+        item_name: `PromptVault: ${product.name}`,
+        no_shipping: "1",
+        solutiontype: "sole", // Enable Guest Checkout (Cards)
+        landingpage: "billing" // Direct to Card entry form
+    });
+
+    window.location.href = `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
+};
+
+/**
+ * Redirects for Full Cart Checkout
+ */
+window.processPaypalCheckout = () => {
+    if (!isUserLoggedIn()) return requireLogin();
+    
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    if (total <= 0) return alert("Please add items to your cart first.");
+
+    const params = new URLSearchParams({
+        cmd: "_xclick",
+        business: PAYPAL_EMAIL,
+        currency_code: "USD",
+        amount: total.toFixed(2),
+        item_name: `PromptVault USA - ${cart.length} AI Assets`,
+        no_shipping: "1",
+        solutiontype: "sole",
+        landingpage: "billing"
+    });
+
+    window.location.href = `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
+};
+
 window.openCheckout = () => {
     if (!isUserLoggedIn()) return requireLogin();
-
     const modal = document.getElementById('checkout-overlay');
     const list = document.getElementById('cart-items-list');
     const totalEl = document.getElementById('cart-total');
-    
     if (!modal || !list) return;
 
     modal.style.display = 'flex';
-    
     if (cart.length === 0) {
         list.innerHTML = `<p style="text-align:center; color:#94a3b8; padding:20px;">Your selection is empty.</p>`;
         if (totalEl) totalEl.innerText = "$0.00";
@@ -118,24 +164,6 @@ window.openCheckout = () => {
 
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     if (totalEl) totalEl.innerText = `$${total.toFixed(2)}`;
-};
-
-window.processPaypalCheckout = () => {
-    if (!isUserLoggedIn()) return requireLogin();
-    
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
-    if (total <= 0) return alert("Please add items to your cart first.");
-
-    const params = new URLSearchParams({
-        cmd: "_xclick",
-        business: PAYPAL_EMAIL,
-        currency_code: "USD",
-        amount: total.toFixed(2),
-        item_name: `PromptVault USA - ${cart.length} AI Assets`,
-        no_shipping: "1"
-    });
-
-    window.location.href = `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
 };
 
 // --- 5. NAVIGATION & SOCIAL PROOF ---
