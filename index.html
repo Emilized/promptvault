@@ -207,6 +207,10 @@
                 <summary>Refund Policy <span>+</span></summary>
                 <p style="padding-top:10px; font-size:0.9rem; color:#94a3b8;">Digital assets are non-refundable. We provide instant access upon payment.</p>
             </details>
+            <details>
+                <summary>Terms & Conditions <span>+</span></summary>
+                <p style="padding-top:10px; font-size:0.9rem; color:#94a3b8;">Usage of prompts is for personal or business growth. Resale of raw files is prohibited.</p>
+            </details>
         </section>
     </div> 
 
@@ -265,10 +269,7 @@
 <script>
     const PAYPAL_EMAIL = "emilyperong23@gmail.com";
     let cart = JSON.parse(localStorage.getItem('pv_cart')) || [];
-    window.updateCartCount = () => { 
-        const pill = document.getElementById('cart-count-pill');
-        if(pill) pill.innerText = cart.length; 
-    };
+    window.updateCartCount = () => { document.getElementById('cart-count-pill').innerText = cart.length; };
 
     window.openCheckout = () => {
         const modal = document.getElementById('checkout-overlay');
@@ -347,11 +348,9 @@
 
     document.addEventListener('DOMContentLoaded', () => { 
         window.updateCartCount(); 
-        // Blog/Internal Routing Logic
+        // Blog Redirect Fix
         const urlParams = new URLSearchParams(window.location.search);
-        if(urlParams.get('action') === 'browse') {
-            window.changePage('browse', document.querySelectorAll('.nav-item')[1]);
-        }
+        if(urlParams.get('action') === 'browse') window.changePage('browse');
     });
 </script>
 
