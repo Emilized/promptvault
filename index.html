@@ -39,6 +39,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        // AUDIT FIX: Consolidated doc, getDoc, and setDoc
         import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         
         const firebaseConfig = {
@@ -59,7 +60,7 @@
         window.db = db;
         window.allProducts = [];
 
-        // --- NEW USER PROVISIONING (Auto-Gift Welcome Assets) ---
+        // --- AUDIT ADDITION: NEW USER PROVISIONING ---
         async function provisionNewUser(user) {
             const userRef = doc(db, "users", user.uid);
             const userSnap = await getDoc(userRef);
@@ -75,7 +76,7 @@
                         },
                         {
                             productName: "🎁 2026 AI Starter Kit (Free)",
-                            driveLink: "https://drive.google.com/file/d/1MBGb8x24PmqMH5CUlkxJ5ckY7cDcVf4u/view?usp=drivesdk",
+                            driveLink: "https://drive.google.com/file/d/1Hk5zxOZJbiHdxSZYKZOFlHQ5JzreCwgs/view?usp=drivesdk",
                             timestamp: Date.now()
                         }
                     ]
@@ -83,7 +84,6 @@
             }
         }
 
-        // --- LIBRARY LOGIC: Reads from purchasedPrompts Array ---
         window.loadUserLibrary = async () => {
             const user = auth.currentUser;
             const grid = document.getElementById('user-library-grid');
@@ -98,7 +98,7 @@
                     const data = userDocSnap.data();
                     const prompts = data.purchasedPrompts || [];
                     if (prompts.length === 0) {
-                        grid.innerHTML = `<div style="text-align:center; padding:40px; background:var(--glass); border-radius:20px;"><p style="color:#94a3b8;">Your library is empty. Your purchases will appear here.</p></div>`;
+                        grid.innerHTML = `<div style="text-align:center; padding:40px; background:var(--glass); border-radius:20px;"><p style="color:#94a3b8;">Your library is empty.</p></div>`;
                         return;
                     }
                     prompts.sort((a, b) => b.timestamp - a.timestamp);
@@ -114,7 +114,6 @@
             }
         };
 
-        // --- SPA NAVIGATION ---
         window.changePage = (id, el) => {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             const activePage = document.getElementById(id);
@@ -137,6 +136,7 @@
             if (user) {
                 loginBtn.innerText = "Logout";
                 loginBtn.onclick = () => signOut(auth);
+                // AUDIT FIX: Dynamic Home Page Button
                 if(kitBtn) {
                     kitBtn.innerText = "Access My Library";
                     kitBtn.style.background = "var(--accent)";
@@ -144,7 +144,7 @@
                 }
                 if(authOverlay) authOverlay.style.display = 'none';
             } else {
-                loginBtn.innerText = "Sign In / Join";
+                loginBtn.innerText = "Sign In";
                 loginBtn.onclick = () => authOverlay.style.display = 'flex';
                 if(kitBtn) {
                     kitBtn.innerText = "Sign In to Claim Kit";
@@ -155,8 +155,8 @@
 
         window.handleGoogle = async () => {
             try { 
-                const res = await signInWithPopup(auth, provider); 
-                await provisionNewUser(res.user);
+                const res = await signInWithPopup(auth, provider);
+                await provisionNewUser(res.user); 
             } catch(e) { alert(e.message); }
         }; 
 
@@ -204,19 +204,6 @@
             <p class="hero-subheadline">Unlock 500+ High-Converting Prompts for Business and Marketing.</p> 
             <button id="claim-kit-btn" class="btn-main" style="background:var(--success); margin-top:20px;">Sign In to Claim Kit</button>
         </div> 
-
-        <section class="info-center" style="margin-top: 60px;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                <div style="background: #111; border: 1px solid var(--border); border-radius: 24px; padding: 25px;">
-                    <h3 style="color: #fbbf24; margin-top: 0; font-size: 1.1rem;">REFUND POLICY</h3>
-                    <p style="font-size: 0.85rem;">Digital assets delivered via instant download are non-refundable.</p>
-                </div>
-                <div style="background: #111; border: 1px solid var(--border); border-radius: 24px; padding: 25px;">
-                    <h3 style="color: #fbbf24; margin-top: 0; font-size: 1.1rem;">TERMS & CONDITIONS</h3>
-                    <p style="font-size: 0.85rem;">Raw prompt files are for licensed use and cannot be resold.</p>
-                </div>
-            </div>
-        </section> 
     </div> 
 
     <div id="browse" class="page">
@@ -242,7 +229,7 @@
         <a class="nav-item" onclick="changePage('browse', this)">⊞<br><small>Vaults</small></a>
         <a class="nav-item" onclick="changePage('library', this)">👤<br><small>Library</small></a>
         <a class="nav-item" onclick="window.location.href='blog.html'">📖<br><small>Blog</small></a>
-        <a class="nav-item" onclick="changePage('home', this)">👑<br><small>Lab</small></a>
+        <a class="nav-item" onclick="changePage('home', this)">👑<br><small>The Hub</small></a>
     </div>
 </nav> 
 
@@ -265,7 +252,7 @@
         localStorage.setItem('pv_cart', JSON.stringify(cart));
         window.updateCartCount();
         alert(`${product.name} added!`);
-    }; 
+    };
 
     window.renderProducts = (productsToDisplay) => {
         const list = document.getElementById('product-list');
@@ -281,10 +268,7 @@
                     <div style="color:var(--secondary); font-weight:800; font-size:1.4rem; margin-bottom:15px;">$${p.price.toFixed(2)}</div>
                     <div style="display:flex; flex-direction:column; gap:8px;">
                         <button onclick="processDirectPurchase('${pData}')" class="btn-main" style="background:var(--success); color:white; font-weight:800; padding:12px; border:none; border-radius:12px;">Buy Now</button>
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                            <button onclick="addToCart('${pData}')" class="btn-main" style="background:var(--accent); font-size:0.8rem; padding:10px;">+ Cart</button>
-                            <a href="product.html?id=${p.id}" class="btn-main" style="background:var(--glass); text-decoration:none; text-align:center; font-size:0.8rem; padding:10px; color:white; border:1px solid var(--border);">Details</a>
-                        </div>
+                        <button onclick="addToCart('${pData}')" class="btn-main" style="background:var(--accent); font-size:0.8rem; padding:10px;">+ Cart</button>
                     </div>
                 </div>`;
         }).join('');
