@@ -33,11 +33,16 @@
         .auth-input:focus { border-color: var(--accent); }
         summary { list-style: none; outline: none; }
         summary::-webkit-details-marker { display: none; }
+        
+        /* Library Card Styling */
+        .library-card { background: var(--glass); border: 1px solid var(--border); padding: 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     </style>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        // STEP 4: IMPORT FIRESTORE
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         
         const firebaseConfig = {
           apiKey: "AIzaSyDGB5seZrnWVXv--Yr_z1lPOOk1kO5CLFU",
@@ -50,8 +55,11 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app); // INITIALIZE DATABASE
         const provider = new GoogleAuthProvider();
+        
         window.auth = auth;
+        window.db = db; // EXPOSE DB TO GLOBAL SCOPE
 
         onAuthStateChanged(auth, (user) => {
             const loginBtn = document.getElementById('login-pill');
@@ -211,7 +219,7 @@
             <h2 style="font-size:2.5rem;">My <span class="highlight-text">Intelligence</span> Library</h2>
             <p style="color:#94a3b8; margin-bottom:30px;">Access your permanent Google Drive PDF links below.</p>
             <div id="user-library-grid" style="display:grid; grid-template-columns:1fr; gap:15px;">
-                <div style="text-align:center; padding:60px; background:var(--glass); border:1px dashed var(--border); border-radius:24px;">
+                <div id="library-status-msg" style="text-align:center; padding:60px; background:var(--glass); border:1px dashed var(--border); border-radius:24px;">
                     <p style="color:#94a3b8;">Syncing your secure vault assets...</p>
                 </div>
             </div>
@@ -348,6 +356,53 @@
         renderProducts(filtered);
     };
 
+    // LIBRARY FETCH LOGIC
+    window.loadUserLibrary = async () => {
+        const user = window.auth.currentUser;
+        const grid = document.getElementById('user-library-grid');
+        if (!grid) return;
+
+        if (!user) {
+            grid.innerHTML = `
+                <div style="text-align:center; padding:40px;">
+                    <p style="margin-bottom:20px; color:#94a3b8;">Sign in to unlock your Intelligence Library.</p>
+                    <button class="btn-main" onclick="document.getElementById('auth-overlay').style.display='flex'">Sign In Now</button>
+                </div>`;
+            return;
+        }
+
+        try {
+            // Firestore data retrieval
+            const { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+            const q = collection(window.db, "users", user.uid, "purchases");
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                grid.innerHTML = `
+                    <div style="text-align:center; padding:40px; background:var(--glass); border:1px solid var(--border); border-radius:20px;">
+                        <p style="color:#94a3b8;">Your library is empty. Visit the Vault to start.</p>
+                        <button class="btn-main" style="background:var(--accent); margin-top:15px;" onclick="changePage('browse')">Go to Vault</button>
+                    </div>`;
+                return;
+            }
+
+            grid.innerHTML = querySnapshot.docs.map(doc => {
+                const data = doc.data();
+                return `
+                    <div class="library-card">
+                        <div>
+                            <h4 style="margin:0; color:white; font-size:1rem;">${data.productName}</h4>
+                            <small style="color:var(--secondary);">Unlocked: ${new Date(data.timestamp).toLocaleDateString()}</small>
+                        </div>
+                        <a href="${data.driveLink}" target="_blank" class="btn-main" style="padding:10px 15px; font-size:0.75rem; background:var(--success); text-decoration:none; border-radius:8px;">Open PDF</a>
+                    </div>`;
+            }).join('');
+        } catch (e) {
+            console.error("Library Sync Error:", e);
+            grid.innerHTML = `<p style="color:red; text-align:center;">Database sync failed. Please check your connection.</p>`;
+        }
+    };
+
     window.changePage = (id, el) => {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         const activePage = document.getElementById(id);
@@ -360,6 +415,10 @@
                 allProducts = data;
                 renderProducts(allProducts);
             });
+        }
+
+        if (id === 'library') {
+            window.loadUserLibrary();
         }
     };
 
