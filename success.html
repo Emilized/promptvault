@@ -11,53 +11,95 @@
 <body>
 <div class="spotlight"></div>
 
-<div class="container" style="text-align:center; padding-top:150px;">
+<div class="container" style="text-align:center; padding-top:100px;">
     <div class="glass-card" style="max-width:500px; margin:0 auto; padding: 40px;">
-        <div style="font-size: 3rem; margin-bottom: 20px;">✅</div>
-        <h2 style="color:var(--success); margin-bottom: 10px;">Payment Successful!</h2>
-        <p style="margin-bottom:30px; color:#94a3b8; font-size: 0.9rem;">Your 2026 AI Intelligence assets have been unlocked and are ready for immediate use.</p>
+        <div id="status-icon" style="font-size: 3rem; margin-bottom: 20px;">✅</div>
+        <h2 id="status-title" style="color:var(--success); margin-bottom: 10px;">Payment Successful!</h2>
+        <p id="status-msg" style="margin-bottom:30px; color:#94a3b8; font-size: 0.9rem;">Your AI Intelligence assets are being secured in your permanent library.</p>
         
         <div id="product-delivery-zone">
             <div style="padding: 20px; border: 1px dashed var(--border); border-radius: 15px;">
-                <p style="color: var(--text-gray);">Syncing secure vault link...</p>
+                <p style="color: var(--text-gray);">Initializing secure database handshake...</p>
             </div>
         </div>
 
-        <button onclick="window.location.href='index.html'" class="btn-main" style="margin-top: 30px; background: var(--glass); width: 100%; border: 1px solid var(--border);">Return to Dashboard</button>
+        <button onclick="window.location.href='index.html'" class="btn-main" style="margin-top: 30px; background: var(--glass); width: 100%; border: 1px solid var(--border);">Go to My Library</button>
     </div>
 </div>
 
-<script>
-    window.onload = () => {
-        // 1. Retrieve the product data from browser memory
-        const data = localStorage.getItem('last_clicked_product');
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // Standard Config
+    const firebaseConfig = {
+        apiKey: "AIzaSyDGB5seZrnWVXv--Yr_z1lPOOk1kO5CLFU",
+        authDomain: "promptvaultusa.firebaseapp.com",
+        projectId: "promptvaultusa",
+        storageBucket: "promptvaultusa.firebasestorage.app",
+        messagingSenderId: "960105895017",
+        appId: "1:960105895017:web:1aa79742d36960d2bfbef8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    onAuthStateChanged(auth, async (user) => {
         const displayArea = document.getElementById('product-delivery-zone');
+        const statusMsg = document.getElementById('status-msg');
+        
+        // Retrieve temporary session data
+        const data = localStorage.getItem('last_clicked_product');
+
+        if (!user) {
+            displayArea.innerHTML = `
+                <div style="padding: 20px; background: rgba(239, 68, 68, 0.1); border-radius: 15px; border: 1px solid var(--error);">
+                    <p style="color: var(--error); font-size: 0.85rem;">Please Sign In to claim your assets to your permanent library.</p>
+                </div>`;
+            return;
+        }
 
         if (data) {
-            const lastProduct = JSON.parse(data);
+            const product = JSON.parse(data);
             
-            if (lastProduct.download) {
+            try {
+                // 1. Permanent Write to Firestore Array (purchasedPrompts)
+                const userRef = doc(db, "users", user.uid);
+                await updateDoc(userRef, {
+                    purchasedPrompts: arrayUnion({
+                        productName: product.name,
+                        driveLink: product.download, // PDF Link
+                        timestamp: Date.now()
+                    })
+                });
+
+                // 2. UI Success Update
+                statusMsg.innerText = "Assets successfully synced to your permanent vault.";
                 displayArea.innerHTML = `
                     <div style="background:rgba(16, 185, 129, 0.1); padding:25px; border-radius:20px; border:1px solid var(--success);">
-                        <h4 style="margin-bottom:5px; color: white;">${lastProduct.name}</h4>
-                        <p style="font-size: 0.75rem; color: var(--success); margin-bottom: 20px; font-weight: 800;">READY FOR DOWNLOAD</p>
-                        <a href="${lastProduct.download}" target="_blank" class="btn-main" 
-                           style="background:var(--success); color:white; display:block; text-decoration:none; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);">
-                           📥 DOWNLOAD PDF ASSET
+                        <h4 style="margin-bottom:5px; color: white;">${product.name}</h4>
+                        <p style="font-size: 0.75rem; color: var(--success); margin-bottom: 20px; font-weight: 800;">PERMANENTLY UNLOCKED</p>
+                        <a href="${product.download}" target="_blank" class="btn-main" 
+                           style="background:var(--success); color:white; display:block; text-decoration:none; box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); text-align:center; padding:15px; border-radius:12px; font-weight:800;">
+                           📥 DOWNLOAD PDF NOW
                         </a>
                     </div>
                 `;
-                // Security: Clear the memory after 5 minutes so the link doesn't sit there
-                setTimeout(() => { localStorage.removeItem('last_clicked_product'); }, 300000);
+
+                // 3. Cleanup
+                localStorage.removeItem('pv_cart');
+                localStorage.removeItem('last_clicked_product');
+
+            } catch (error) {
+                console.error("Sync Error:", error);
+                displayArea.innerHTML = `<p style="color:red;">Database Sync Error. Your link is: <a href="${product.download}" style="color:white;">Click Here</a></p>`;
             }
         } else {
-            displayArea.innerHTML = `
-                <div style="padding: 20px; background: rgba(239, 68, 68, 0.1); border-radius: 15px; border: 1px solid var(--error);">
-                    <p style="color: var(--error); font-size: 0.85rem;">Order session expired. If you just paid, please check your email for the direct link.</p>
-                </div>
-            `;
+            displayArea.innerHTML = `<p style="color:#94a3b8;">No pending unlocks found. Check your Library dashboard.</p>`;
         }
-    };
+    });
 </script>
 </body>
 </html>
