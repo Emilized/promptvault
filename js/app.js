@@ -1,11 +1,26 @@
 /**
- * PROMPTVAULT USA - CORE ENGINE v1.8 (Direct Purchase & Card Support)
- * Handles: Auth Guards, Search, Cart, Direct Buy, and Card Payments.
+ * PROMPTVAULT USA - CORE ENGINE v2.1 (Cloud Database & Library)
+ * Handles: Auth, Search, Cart, PayPal, and Firestore Persistence.
  */
+
+// --- NEW MODULE IMPORTS (Phase 7) ---
+import { getFirestore, doc, setDoc, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+// Initialize Firestore
+// Note: 'app' is assumed to be initialized in your index.html script tag
+const db = getFirestore();
+window.db = db; 
 
 const PAYPAL_EMAIL = "emilyperong23@gmail.com";
 let cart = JSON.parse(localStorage.getItem('pv_cart')) || [];
 let allProducts = [];
+
+// PDF MAPPING (Your saved Google Drive links)
+const DRIVE_LINKS = {
+    "Real Estate Mega Pack": "YOUR_DRIVE_LINK_1",
+    "E-commerce Growth Vault": "YOUR_DRIVE_LINK_2",
+    "Starter Kit": "YOUR_DRIVE_LINK_3"
+};
 
 // --- 1. AUTH HELPERS ---
 const isUserLoggedIn = () => !!window.auth?.currentUser;
@@ -60,7 +75,43 @@ window.filterProducts = (val) => {
     window.renderProducts(filtered);
 };
 
-// --- 3. CART OPERATIONS ---
+// --- 3. LIBRARY & DATABASE LOGIC (New v2.1) ---
+
+window.loadUserLibrary = async () => {
+    const user = window.auth?.currentUser;
+    const grid = document.getElementById('user-library-grid');
+    if (!grid) return;
+    
+    if (!user) {
+        grid.innerHTML = `<button class="btn-main" onclick="document.getElementById('auth-overlay').style.display='flex'">Sign In to View Library</button>`;
+        return;
+    }
+
+    try {
+        const q = collection(db, "users", user.uid, "purchases");
+        const querySnapshot = await getDocs(q);
+        
+        if (querySnapshot.empty) {
+            grid.innerHTML = `<p style="text-align:center; padding:40px; background:var(--glass); border-radius:20px;">You haven't unlocked any packs yet.</p>`;
+            return;
+        }
+
+        grid.innerHTML = querySnapshot.docs.map(doc => {
+            const data = doc.data();
+            return `
+                <div style="background:var(--glass); border:1px solid var(--border); padding:20px; border-radius:15px; display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <h4 style="margin:0; color:white;">${data.productName}</h4>
+                        <small style="color:var(--secondary);">Unlocked: ${new Date(data.timestamp).toLocaleDateString()}</small>
+                    </div>
+                    <a href="${data.driveLink}" target="_blank" class="btn-main" style="padding:10px 20px; font-size:0.8rem; background:var(--accent); text-decoration:none;">Open PDF</a>
+                </div>
+            `;
+        }).join('');
+    } catch (e) { console.error("Library Sync Error:", e); }
+};
+
+// --- 4. CART & CHECKOUT OPERATIONS ---
 
 window.updateCartCount = () => {
     const pill = document.getElementById('cart-count-pill');
@@ -69,7 +120,6 @@ window.updateCartCount = () => {
 
 window.addToCart = (productStr) => {
     if (!isUserLoggedIn()) return requireLogin();
-
     const product = JSON.parse(decodeURIComponent(productStr));
     cart.push(product);
     localStorage.setItem('pv_cart', JSON.stringify(cart));
@@ -84,19 +134,6 @@ window.addToCart = (productStr) => {
     }
 };
 
-window.removeFromCart = (index) => {
-    cart.splice(index, 1);
-    localStorage.setItem('pv_cart', JSON.stringify(cart));
-    window.updateCartCount();
-    window.openCheckout();
-};
-
-// --- 4. CHECKOUT & PAYPAL ---
-
-/**
- * Redirects for Single Item "Buy Now"
- * Supports Credit/Debit Card via 'solutiontype=sole'
- */
 window.processDirectPurchase = (productStr) => {
     if (!isUserLoggedIn()) return requireLogin();
     const product = JSON.parse(decodeURIComponent(productStr));
@@ -108,19 +145,17 @@ window.processDirectPurchase = (productStr) => {
         amount: product.price.toFixed(2),
         item_name: `PromptVault: ${product.name}`,
         no_shipping: "1",
-        solutiontype: "sole", // Enable Guest Checkout (Cards)
-        landingpage: "billing" // Direct to Card entry form
+        solutiontype: "sole",
+        landingpage: "billing",
+        return: window.location.origin + "/success.html?item=" + encodeURIComponent(product.name),
+        rm: "2"
     });
 
     window.location.href = `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
 };
 
-/**
- * Redirects for Full Cart Checkout
- */
 window.processPaypalCheckout = () => {
     if (!isUserLoggedIn()) return requireLogin();
-    
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     if (total <= 0) return alert("Please add items to your cart first.");
 
@@ -129,10 +164,12 @@ window.processPaypalCheckout = () => {
         business: PAYPAL_EMAIL,
         currency_code: "USD",
         amount: total.toFixed(2),
-        item_name: `PromptVault USA - ${cart.length} AI Assets`,
+        item_name: `PromptVault USA - Order`,
         no_shipping: "1",
         solutiontype: "sole",
-        landingpage: "billing"
+        landingpage: "billing",
+        return: window.location.origin + "/success.html?order=complete",
+        rm: "2"
     });
 
     window.location.href = `https://www.paypal.com/cgi-bin/webscr?${params.toString()}`;
@@ -176,15 +213,14 @@ window.changePage = (id, el) => {
     document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
     if (el) el.classList.add('active');
 
+    // Tab-Specific Logic
     if (id === 'browse' && allProducts.length === 0) {
-        fetch('products.json')
-            .then(res => res.json())
-            .then(data => {
-                allProducts = data;
-                window.renderProducts(allProducts);
-            })
-            .catch(err => console.error("Vault Sync Error:", err));
+        fetch('products.json').then(res => res.json()).then(data => {
+            allProducts = data;
+            window.renderProducts(allProducts);
+        });
     }
+    if (id === 'library') window.loadUserLibrary();
 };
 
 const showSalesNotif = () => {
