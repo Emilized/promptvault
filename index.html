@@ -1,187 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PromptVault USA | Global AI Intelligence</title>
-    
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [{
-        "@type": "Question",
-        "name": "Where can I find the best AI image prompts in the USA?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "PromptVault USA (promptvaultusa.shop) is the premier marketplace for hyper-realistic AI prompts designed for 2026 affiliate marketing and creative automation."
-        }
-      }, {
-        "@type": "Question",
-        "name": "How do I monetize AI content in 2026?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Using DNA-engineered prompts from PromptVault USA allows entrepreneurs to create high-converting affiliate assets that bypass AI detection."
-        }
-      }]
-    }
-    </script>
-
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/png" href="logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* Step 1: Fix Nav Font Size */
-        .nav-item { font-size: 1.2rem !important; font-weight: 700; }
-        .nav-item small { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+        /* CSS Fix for Step 1: Navigation Font Sizes */
+        .bottom-nav .nav-item { font-size: 1.2rem; transition: 0.3s; }
+        .bottom-nav .nav-item small { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; margin-top: 4px; display: block; }
         
-        /* Payment Logo Styling */
-        .payment-methods { display: flex; gap: 15px; justify-content: center; filter: grayscale(1) opacity(0.7); margin-top: 20px; }
-        .payment-methods img { height: 25px; }
+        /* Layout for payment logos */
+        .payment-badges { display: flex; gap: 15px; justify-content: center; filter: grayscale(1); opacity: 0.6; margin-top: 20px; }
+        .payment-badges img { height: 25px; }
 
-        /* Review Styling */
+        /* Review Section Styling */
         .review-card { background: var(--glass); padding: 20px; border-radius: 15px; border: 1px solid var(--border); text-align: left; }
-        .stars { color: #fbbf24; font-size: 0.9rem; margin-bottom: 10px; }
-
-        /* Step 6: Search Bar */
-        .search-container { margin-bottom: 30px; position: relative; }
-        .search-bar { width: 100%; padding: 15px 25px; border-radius: 50px; background: var(--glass); border: 1px solid var(--border); color: white; font-size: 1rem; }
+        .review-user { display: flex; align-items: center; gap: 10px; margin-top: 15px; }
+        .review-user img { width: 35px; height: 35px; border-radius: 50%; }
     </style>
 </head>
 <body>
 
-<div class="spotlight"></div>
-
-<header>
-    <div class="header-wrap">
-        <div onclick="window.location.reload()" style="cursor:pointer; display:flex; align-items:center; gap:10px;">
-            <img src="logo.png" class="logo-box" onerror="this.src='https://via.placeholder.com/40?text=PV'">
-            <span style="font-weight:800; letter-spacing:-1px;">PROMPTVAULT<span style="color:var(--secondary)">USA</span></span>
-        </div>
-        <div style="display: flex; gap: 15px; align-items: center;">
-            <button class="signin-pill" onclick="UI.modal('checkout-overlay', 'open')" style="background:var(--glass); position:relative; padding: 10px 15px; border:1px solid var(--border);">
-                🛒 <span id="cart-count-pill" style="background:var(--accent); color:white; border-radius:50%; padding:2px 6px; font-size:10px; position:absolute; top:-5px; right:-5px; font-weight:800;">0</span>
-            </button>
-            <button class="signin-pill" id="login-pill" onclick="UI.modal('auth-overlay', 'open')">Sign In</button>
-        </div>
-    </div>
-</header>
-
 <div class="container">
     <div id="home" class="page active">
-        <div class="hero">
-            <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px; background: rgba(255,255,255,0.05); width: fit-content; margin-inline: auto; padding: 8px 16px; border-radius: 100px;">
-                <span style="color: #fbbf24;">★★★★★</span>
-                <span style="font-size: 0.8rem; font-weight: 800; color: #94a3b8;">TRUSTED BY 20,000+ CUSTOMERS</span>
-            </div>
-            <h2>Command the <span>AI Economy</span></h2>
-            <p class="hero-subheadline">PromptVaultUSA is your all-in-one marketplace for powerful, ready-to-use AI prompts.</p>
-            
-            <div class="payment-methods">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
-            </div>
-        </div>
-
-        <section style="margin: 60px 0;">
-            <h3 style="text-align: center; margin-bottom: 30px;">Real Results from Users</h3>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+        <section class="reviews" style="margin: 60px 0;">
+            <h3 style="text-align:center; margin-bottom:30px;">User Success Stories</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                 <div class="review-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"The hyper-realistic prompts for real estate saved me 20 hours of content creation. Worth every penny."</p>
-                    <small>— Alex R., Affiliate Marketer</small>
+                    <p>"The DNA-engineered prompts changed my affiliate game. My CTR doubled in a week!"</p>
+                    <div class="review-user">
+                        <div style="background:var(--accent); width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800;">J</div>
+                        <div><strong>Jason K.</strong><br><small>E-commerce Owner</small></div>
+                    </div>
                 </div>
                 <div class="review-card">
-                    <div class="stars">★★★★★</div>
-                    <p>"Finally, prompts that actually bypass detection. My e-commerce blog traffic doubled in 30 days."</p>
-                    <small>— Sarah M., Store Owner</small>
+                    <p>"Finally, prompts that actually look realistic. Perfect for my real estate listings."</p>
+                    <div class="review-user">
+                        <div style="background:var(--secondary); width:35px; height:35px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800;">S</div>
+                        <div><strong>Sarah L.</strong><br><small>Real Estate Agent</small></div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <div class="glass-card" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); margin: 60px 0; border-radius: 30px;">
-            <div style="display:flex; flex-direction:column; align-items:center; text-align:center; padding: 40px;">
-                <span style="color:var(--success); font-weight:800; font-size: 0.9rem; letter-spacing: 2px;">LIMITED TIME GIFT</span>
-                <h2 style="margin: 15px 0; font-size: 2rem;">Claim 2026 AI Starter Kit</h2>
-                <button id="claim-kit-btn" class="btn-main" onclick="UI.modal('auth-overlay', 'open')" style="max-width:400px; background:var(--success); color:white;">Sign In to Claim Kit</button>
-            </div>
+        <div class="payment-badges">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" alt="PayPal">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Visa.svg" alt="Visa">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b7/MasterCard_Logo.svg" alt="Debit">
         </div>
     </div>
 
     <div id="browse" class="page">
         <div style="padding: 40px 0;">
-            <h2 style="font-size:2.5rem;">The <span class="highlight-text">Asset</span> Vault</h2>
-            
-            <div class="search-container">
-                <input type="text" id="vault-search" class="search-bar" placeholder="Search prompts (e.g. 'Real Estate', 'Cinematic')..." onkeyup="filterProducts()">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px;">
+                <h2 style="margin:0;">The <span class="highlight-text">Asset</span> Vault</h2>
+                <div class="search-container" style="position:relative; flex-grow:1; max-width:400px;">
+                    <input type="text" id="vault-search" placeholder="Search prompts (e.g. 'Real Estate')..." style="width:100%; padding:12px 20px; border-radius:100px; background:var(--glass); border:1px solid var(--border); color:white;">
+                </div>
             </div>
-
-            <div class="vault-grid" id="product-list" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:25px;"></div>
+            <div class="vault-grid" id="product-list" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:25px; margin-top:30px;">
+                </div>
         </div>
     </div>
-
-    <footer style="margin-top: 80px; padding: 60px 20px; border-top: 1px solid var(--border); text-align: center;">
-        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-bottom: 25px; font-size: 0.85rem; font-weight: 600;">
-            <a href="legal.html" style="color: var(--text-gray);">Privacy Policy</a>
-            <a href="legal.html" style="color: var(--text-gray);">Terms</a>
-            <a href="legal.html" style="color: var(--text-gray);">Contact</a>
-        </div>
-        <p style="color: #64748b; font-size: 0.75rem;">&copy; 2026 PROMPTVAULT USA.</p>
-    </footer>
 </div>
 
 <div id="auth-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); z-index: 7000; align-items: center; justify-content: center; padding: 20px;">
-    <div class="auth-card" style="width: 100%; max-width: 400px; text-align: center; background: var(--glass); border: 1px solid var(--border); padding: 40px; border-radius: 30px;">
-        <h2 style="margin-bottom: 10px;">Welcome Back</h2>
-        <div style="display: flex; flex-direction: column; gap: 15px; margin-top: 25px;">
-            <input type="email" placeholder="Email Address" style="padding:12px; border-radius:10px; border:1px solid var(--border); background:rgba(255,255,255,0.05); color:white;">
-            <input type="password" placeholder="Password" style="padding:12px; border-radius:10px; border:1px solid var(--border); background:rgba(255,255,255,0.05); color:white;">
-            <button class="btn-main" style="background:var(--accent);">Sign In</button>
+    <div class="auth-card" style="width: 100%; max-width: 400px; background: var(--glass); border: 1px solid var(--border); padding: 40px; border-radius: 30px;">
+        <h2>Join the Elite</h2>
+        <div style="display:flex; flex-direction:column; gap:15px; margin: 25px 0;">
+            <input type="email" id="auth-email" placeholder="Email Address" style="padding:12px; border-radius:10px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white;">
+            <input type="password" id="auth-pass" placeholder="Password" style="padding:12px; border-radius:10px; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white;">
+            <button onclick="handleAuth('login')" class="btn-main" style="background:var(--accent);">Login</button>
+            <button onclick="handleAuth('signup')" style="background:none; border:1px solid var(--border); color:white; padding:10px; border-radius:10px; cursor:pointer;">Create Account</button>
         </div>
-        <div style="margin: 20px 0; color: #64748b;">OR</div>
+        <div style="margin: 20px 0; color:#64748b;">OR</div>
         <button onclick="handleGoogle()" class="btn-main" style="background: white; color: black; display: flex; align-items: center; justify-content: center; gap: 10px;">
             Continue with Google
         </button>
-        <button onclick="UI.modal('auth-overlay', 'close')" style="background: none; border: none; color: var(--accent); margin-top: 20px; cursor: pointer;">Close</button>
+        <button onclick="UI.modal('auth-overlay', 'close')" style="background: none; border: none; color: var(--accent); margin-top: 20px; cursor: pointer;">Maybe Later</button>
     </div>
 </div>
 
 <div id="checkout-overlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); z-index: 6000; align-items: center; justify-content: center;">
     <div class="auth-card" style="width: 95%; max-width: 450px;">
-        <h3 style="margin-top:0; text-align:center;">Checkout</h3>
-        <div id="cart-items-list" style="max-height: 200px; overflow-y: auto; margin-bottom: 15px;"></div>
-        <div style="display:flex; justify-content:space-between; font-weight:800; border-top:1px solid var(--border); padding-top:15px; margin-bottom:20px;">
-            <span>Total:</span>
-            <span id="cart-total" style="color:var(--secondary)">$0.00</span>
-        </div>
-        
-        <button onclick="processPaypalCheckout()" class="btn-main" style="background:#0070ba; margin-bottom:10px;">Pay with PayPal</button>
-        <button onclick="UI.modal('credit-card-fields', 'open')" class="btn-main" style="background:var(--glass); border:1px solid var(--border);">Pay with Debit/Credit Card</button>
-        
-        <center><span style="color: #94a3b8; cursor:pointer; display:block; margin-top:20px;" onclick="UI.modal('checkout-overlay', 'close')">Cancel</span></center>
+        <h3 style="text-align:center;">Checkout</h3>
+        <div id="cart-items-list" style="max-height: 200px; overflow-y: auto; margin-bottom:20px;"></div>
+        <div id="paypal-button-container"></div> <center style="margin-top:20px;"><span style="color: #94a3b8; cursor:pointer;" onclick="UI.modal('checkout-overlay', 'close')">Back to Vault</span></center>
     </div>
 </div>
-
-<nav class="bottom-nav">
-    <div style="width:100%; max-width:600px; display:flex; justify-content:space-around;">
-        <a class="nav-item active" onclick="changePage('home', this)">🏠<br><small>Home</small></a>
-        <a class="nav-item" onclick="changePage('browse', this)">⊞<br><small>Vaults</small></a>
-        <a class="nav-item" onclick="window.location.href='blog.html'">📖<br><small>Blog</small></a>
-    </div>
-</nav>
-
-<script type="module" src="js/app.js"></script>
-<script>
-    // Local Filter Function for Step 6
-    function filterProducts() {
-        const query = document.getElementById('vault-search').value.toLowerCase();
-        const items = document.querySelectorAll('.product-card');
-        items.forEach(item => {
-            const text = item.innerText.toLowerCase();
-            item.style.display = text.includes(query) ? 'block' : 'none';
-        });
-    }
-</script>
-</body>
-</html>
